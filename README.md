@@ -1,6 +1,6 @@
 # Hélène David — Portfolio
 
-Personal portfolio website for Hélène David, Business & Marketing student at UCLL and co-founder of [CalmCampus](https://calmcampus.be).
+Personal portfolio website for Hélène David, International Business Management student (Marketing option), and CEO & co-founder of CalmCampus.
 
 **Live site → [helene-david.com](https://helene-david.com)**
 
@@ -12,8 +12,8 @@ Personal portfolio website for Hélène David, Business & Marketing student at U
 |------|-------------|
 | `/` | Landing page — hero, stats, featured work |
 | `/work.html` | Full experience timeline |
-| `/about.html` | Bio, education history, skills & certifications |
-| `/contact.html` | Contact links and what I'm open to |
+| `/about.html` | Bio, education, skills, languages & certifications |
+| `/contact.html` | Email and LinkedIn |
 
 ## Tech Stack
 
@@ -39,13 +39,14 @@ python3 -m http.server 3000
 
 ```
 Portfolio/
-├── index.html       # Landing page
-├── work.html        # Experience & ventures
-├── about.html       # About, education, skills
-├── contact.html     # Contact page
-├── style.css        # Shared styles (CSS custom properties)
-├── script.js        # Shared JS (nav, animations)
-├── CNAME            # Custom domain for GitHub Pages
+├── index.html            # Landing page
+├── work.html             # Experience
+├── about.html            # About, education, skills
+├── contact.html          # Contact page
+├── assets/
+│   ├── css/style.css     # Shared styles (CSS custom properties)
+│   └── js/script.js      # Shared JS (nav, animations)
+├── CNAME                 # Custom domain for GitHub Pages
 └── README.md
 ```
 
@@ -55,9 +56,9 @@ All design tokens live in `:root` in `style.css` — change `--accent` to swap t
 
 ```css
 :root {
-  --accent:  #b48be4;   /* primary purple */
-  --accent2: #7c5cbf;   /* darker purple */
-  --bg:      #0d0c0e;   /* page background */
+  --accent:  #c9a3ff;   /* primary purple */
+  --accent2: #9a6ff0;   /* deeper purple */
+  --bg:      #1a1625;   /* page background */
 }
 ```
 
