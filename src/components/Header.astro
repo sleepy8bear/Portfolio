@@ -13,7 +13,9 @@ const isActive = (href: string) => normalise(href) === current;
 ---
 
 <nav id="nav">
-  <a href="/" class="nav-logo">HD</a>
+  <a href="/" class="logo-badge nav-logo" aria-label="Hélène David — home">
+    <img src="/logo.png" alt="Hélène David" width="400" height="400" />
+  </a>
   <ul class="nav-links">
     {links.map((l) => (
       <li><a href={l.href} class:list={{ active: isActive(l.href) }}>{l.label}</a></li>
