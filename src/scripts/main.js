@@ -8,18 +8,21 @@ window.addEventListener('scroll', () => {
 const hamburger = document.querySelector('.hamburger');
 const navLinks  = document.querySelector('.nav-links');
 
-hamburger?.addEventListener('click', () => {
-  navLinks.classList.toggle('open');
-  const spans  = hamburger.querySelectorAll('span');
-  const isOpen = navLinks.classList.contains('open');
-  spans[0].style.transform = isOpen ? 'rotate(45deg) translate(5px, 5px)' : '';
-  spans[1].style.opacity   = isOpen ? '0' : '';
-  spans[2].style.transform = isOpen ? 'rotate(-45deg) translate(5px, -5px)' : '';
-});
+function setMenu(open) {
+  navLinks.classList.toggle('open', open);
+  document.body.classList.toggle('menu-open', open);
+  hamburger.setAttribute('aria-expanded', String(open));
+  const spans = hamburger.querySelectorAll('span');
+  spans[0].style.transform = open ? 'rotate(45deg) translate(5px, 5px)' : '';
+  spans[1].style.opacity   = open ? '0' : '';
+  spans[2].style.transform = open ? 'rotate(-45deg) translate(5px, -5px)' : '';
+}
 
-navLinks?.querySelectorAll('a').forEach(a =>
-  a.addEventListener('click', () => navLinks.classList.remove('open'))
-);
+hamburger?.addEventListener('click', () => setMenu(!navLinks.classList.contains('open')));
+navLinks?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+// Rotating a phone or resizing to desktop width must not leave the menu (and scroll lock) stuck open
+window.matchMedia('(min-width: 641px)').addEventListener('change', e => { if (e.matches) setMenu(false); });
 
 // Intersection observer — fade-ins + language bars
 const observer = new IntersectionObserver((entries) => {

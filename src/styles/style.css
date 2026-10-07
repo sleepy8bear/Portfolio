@@ -94,10 +94,13 @@ p { color: var(--muted); max-width: 65ch; }
 }
 
 #nav.scrolled {
-  background: rgba(26, 22, 37, 0.85);
-  backdrop-filter: blur(16px);
+  background: rgba(26, 22, 37, 0.92);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
+}
+/* Separate rule so the minifier keeps the unprefixed property (Chrome, Firefox) */
+@supports (backdrop-filter: blur(1px)) {
+  #nav.scrolled { backdrop-filter: blur(16px); }
 }
 
 .nav-logo {
@@ -938,5 +941,49 @@ footer p {
   .footer-links { gap: 1.25rem; }
 
   .featured-card { padding: 1.75rem; }
-  .stat-item { flex: 1 1 45%; }
+
+  /* Stats: keep all three side by side instead of wrapping 2 + 1 */
+  .stats-strip { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .stat-item { padding: 1.5rem 0.5rem; }
+  .stat-num { font-size: 2.25rem; }
+  .stat-label { font-size: 0.72rem; }
+
+  /* Comfortable touch target for the menu button */
+  .hamburger { width: 44px; height: 44px; align-items: center; justify-content: center; margin-right: -10px; }
+
+  .footer-links { flex-wrap: wrap; row-gap: 0.5rem; }
+  .timeline-item, .edu-card, .work-card { padding: 1.5rem; }
+  .work-card-meta { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
+}
+
+@media (max-width: 480px) {
+  /* Full-width, equal buttons on small phones */
+  .hero-actions, .cta-actions { flex-direction: column; align-items: stretch; }
+  .hero-actions .btn, .cta-actions .btn { justify-content: center; }
+  .about-stats { gap: 1.5rem; }
+}
+
+/* Mobile browsers: 100vh includes the collapsing address bar */
+#hero { min-height: 100vh; min-height: 100svh; }
+
+/* Lock page scroll while the mobile menu is open */
+body.menu-open { overflow: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .fade-in { opacity: 1; transform: none; }
+}
+
+/* Touch devices: larger tap targets for links and the Contact pill */
+@media (pointer: coarse) {
+  .nav-links a { padding: 0.5rem 0.25rem; }
+  .nav-links a.nav-cta { padding: 0.65rem 1.25rem; }
+  .nav-links a.active::after { bottom: 2px; }
+  .footer-links a { padding: 0.4rem 0; }
+  .back-link { padding: 0.4rem 0; }
 }

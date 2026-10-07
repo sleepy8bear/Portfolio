@@ -20,7 +20,7 @@ const isActive = (href: string) => normalise(href) === current;
     ))}
     <li><a href={contact.href} class:list={['nav-cta', { active: isActive(contact.href) }]}>{contact.label}</a></li>
   </ul>
-  <button class="hamburger" aria-label="Toggle menu">
+  <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
 </nav>
