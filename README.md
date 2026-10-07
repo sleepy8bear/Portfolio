@@ -12,6 +12,7 @@ Personal portfolio website for Hélène David, International Business Management
 |------|-------------|
 | `/` | Landing page — hero, stats, featured work |
 | `/work.html` | Full experience timeline |
+| `/projects.html` | Projects — CalmCampus, hackathon, brand identity and marketing campaigns |
 | `/about.html` | Bio, education, skills, languages & certifications |
 | `/contact.html` | Email and LinkedIn |
 
@@ -41,6 +42,7 @@ python3 -m http.server 3000
 Portfolio/
 ├── index.html            # Landing page
 ├── work.html             # Experience
+├── projects.html         # Projects
 ├── about.html            # About, education, skills
 ├── contact.html          # Contact page
 ├── assets/
