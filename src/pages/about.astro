@@ -1,40 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About — Hélène David</title>
-  <meta name="description" content="About Hélène David — International Business Management student (Marketing option) and CEO &amp; co-founder of CalmCampus." />
-  <link rel="stylesheet" href="assets/css/style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-</head>
-<body>
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaStrip from '../components/CtaStrip.astro';
+---
 
-  <nav id="nav">
-    <a href="index.html" class="nav-logo">HD</a>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="work.html">Work</a></li>
-      <li><a href="projects.html">Projects</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html" class="nav-cta">Contact</a></li>
-    </ul>
-    <button class="hamburger" aria-label="Toggle menu">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
-
-  <!-- PAGE HERO -->
-  <div class="page-hero">
-    <div class="container">
-      <a href="index.html" class="back-link">← Home</a>
-      <span class="section-label">About</span>
-      <h1>The Person<br />Behind the <em>Work</em></h1>
-      <p>21 years old, based in Leuven — fascinated by how the world works and how people think.</p>
-    </div>
-  </div>
+<BaseLayout
+  title="About — Hélène David"
+  description="About Hélène David — International Business Management student (Marketing option) and CEO & co-founder of CalmCampus."
+>
+  <PageHero label="About" lead="21 years old, based in Leuven — fascinated by how the world works and how people think.">
+    The Person<br />Behind the <em>Work</em>
+  </PageHero>
 
   <!-- ABOUT -->
   <section>
@@ -179,34 +155,11 @@
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="cta-strip">
-    <div class="container">
-      <h2>Want to know more?</h2>
-      <p>Reach out — always happy to chat.</p>
-      <div class="cta-actions">
-        <a href="contact.html" class="btn btn-primary">Get in Touch</a>
-        <a href="work.html" class="btn btn-ghost">See My Work</a>
-      </div>
-    </div>
-  </section>
+  <CtaStrip
+    title="Want to know more?"
+    text="Reach out — always happy to chat."
+    primary={{ href: "/contact.html", label: "Get in Touch" }}
+    secondary={{ href: "/work.html", label: "See My Work" }}
+  />
 
-  <footer>
-    <div class="container">
-      <div class="footer-inner">
-        <span class="footer-logo">HD</span>
-        <nav class="footer-links">
-          <a href="work.html">Work</a>
-          <a href="projects.html">Projects</a>
-          <a href="about.html">About</a>
-          <a href="contact.html">Contact</a>
-          <a href="https://www.linkedin.com/in/helenedavid11" target="_blank" rel="noopener">LinkedIn</a>
-        </nav>
-        <p>© 2026 Hélène David · Leuven, Belgium</p>
-      </div>
-    </div>
-  </footer>
-
-  <script src="assets/js/script.js"></script>
-</body>
-</html>
+</BaseLayout>

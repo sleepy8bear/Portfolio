@@ -18,43 +18,49 @@ Personal portfolio website for Hélène David, International Business Management
 
 ## Tech Stack
 
-- **HTML5** — semantic markup, no framework
+- **[Astro](https://astro.build)** — static site generator with components (`Header`, `Footer`, `PageHero`, `CtaStrip`) and one shared layout
 - **CSS3** — custom properties, Grid, Flexbox, animations
 - **Vanilla JS** — scroll effects, mobile nav, IntersectionObserver
 - **Fonts** — [Playfair Display](https://fonts.google.com/specimen/Playfair+Display) + [Inter](https://fonts.google.com/specimen/Inter) via Google Fonts
-- **Hosting** — GitHub Pages + Cloudflare DNS
+- **Hosting** — GitHub Pages (deployed by GitHub Actions) + Cloudflare DNS
 
 ## Run Locally
 
-No build step needed — just open in a browser:
+Requires [Node.js](https://nodejs.org) (LTS).
 
 ```bash
 git clone git@github.com:sleepy8bear/Portfolio.git
 cd Portfolio
-# open index.html directly, or serve it:
-python3 -m http.server 3000
-# → http://localhost:3000
+npm install
+npm run dev      # → http://localhost:4321
+npm run build    # outputs the static site to dist/
 ```
 
 ## Project Structure
 
 ```
 Portfolio/
-├── index.html            # Landing page
-├── work.html             # Experience
-├── projects.html         # Projects
-├── about.html            # About, education, skills
-├── contact.html          # Contact page
-├── assets/
-│   ├── css/style.css     # Shared styles (CSS custom properties)
-│   └── js/script.js      # Shared JS (nav, animations)
-├── CNAME                 # Custom domain for GitHub Pages
-└── README.md
+├── src/
+│   ├── components/
+│   │   ├── Header.astro      # Nav (highlights the current page)
+│   │   ├── Footer.astro
+│   │   ├── PageHero.astro    # Title block at the top of inner pages
+│   │   └── CtaStrip.astro    # "Get in touch" call-to-action strip
+│   ├── layouts/BaseLayout.astro   # <head>, Header, Footer, script
+│   ├── pages/                # One file per page (index, work, projects, about, contact)
+│   ├── styles/style.css      # Shared styles (CSS custom properties)
+│   └── scripts/main.js       # Nav scroll, mobile menu, fade-ins
+├── public/CNAME              # Custom domain for GitHub Pages
+├── .github/workflows/deploy.yml   # Builds and deploys on every push to main
+├── astro.config.mjs
+└── package.json
 ```
+
+To change the header or footer, edit the component once — every page picks it up.
 
 ## Customisation
 
-All design tokens live in `:root` in `style.css` — change `--accent` to swap the entire colour palette:
+All design tokens live in `:root` in `src/styles/style.css` — change `--accent` to swap the entire colour palette:
 
 ```css
 :root {

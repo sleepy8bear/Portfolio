@@ -4,20 +4,6 @@ window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 40);
 });
 
-// Active nav link based on current page
-const path = window.location.pathname.split('/').pop() || 'index.html';
-document.querySelectorAll('.nav-links a:not(.nav-cta)').forEach(a => {
-  const href = a.getAttribute('href');
-  if (href === path || (path === '' && href === 'index.html')) {
-    a.classList.add('active');
-  }
-});
-
-// Also mark contact CTA active on contact page
-if (path === 'contact.html') {
-  document.querySelector('.nav-cta')?.classList.add('active');
-}
-
 // Mobile menu
 const hamburger = document.querySelector('.hamburger');
 const navLinks  = document.querySelector('.nav-links');

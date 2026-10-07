@@ -32,3 +32,9 @@ node_modules/
 # Build output
 dist/
 build/
+
+# Astro
+.astro/
+
+# Claude Code local files
+.claude/

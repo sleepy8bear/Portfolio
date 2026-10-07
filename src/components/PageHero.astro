@@ -1,0 +1,18 @@
+---
+// Hero used at the top of every inner page. The default slot is the <h1> content,
+// so the title can contain <em> / <br />.
+interface Props {
+  label: string;
+  lead: string;
+}
+const { label, lead } = Astro.props;
+---
+
+<div class="page-hero">
+  <div class="container">
+    <a href="/" class="back-link">← Home</a>
+    <span class="section-label">{label}</span>
+    <h1><slot /></h1>
+    <p>{lead}</p>
+  </div>
+</div>

@@ -1,40 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Projects — Hélène David</title>
-  <meta name="description" content="Projects by Hélène David — CalmCampus (KU Leuven KICK Challenge finalist), an AI investment app hackathon, brand identity, and marketing campaigns." />
-  <link rel="stylesheet" href="assets/css/style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-</head>
-<body>
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaStrip from '../components/CtaStrip.astro';
+---
 
-  <nav id="nav">
-    <a href="index.html" class="nav-logo">HD</a>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="work.html">Work</a></li>
-      <li><a href="projects.html">Projects</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html" class="nav-cta">Contact</a></li>
-    </ul>
-    <button class="hamburger" aria-label="Toggle menu">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
-
-  <!-- PAGE HERO -->
-  <div class="page-hero">
-    <div class="container">
-      <a href="index.html" class="back-link">← Home</a>
-      <span class="section-label">Projects</span>
-      <h1>Things I've <em>Made</em></h1>
-      <p>From a startup that reached the KU Leuven KICK finals to a 24-hour AI hackathon, brand identities and marketing campaigns.</p>
-    </div>
-  </div>
+<BaseLayout
+  title="Projects — Hélène David"
+  description="Projects by Hélène David — CalmCampus (KU Leuven KICK Challenge finalist), an AI investment app hackathon, brand identity, and marketing campaigns."
+>
+  <PageHero label="Projects" lead="From a startup that reached the KU Leuven KICK finals to a 24-hour AI hackathon, brand identities and marketing campaigns.">
+    Things I've <em>Made</em>
+  </PageHero>
 
   <!-- PROJECTS -->
   <section style="background: var(--bg2);">
@@ -141,34 +117,11 @@
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="cta-strip">
-    <div class="container">
-      <h2>Want to talk about any of these?</h2>
-      <p>Happy to share more about the thinking behind them.</p>
-      <div class="cta-actions">
-        <a href="contact.html" class="btn btn-primary">Get in Touch</a>
-        <a href="work.html" class="btn btn-ghost">See My Experience</a>
-      </div>
-    </div>
-  </section>
+  <CtaStrip
+    title="Want to talk about any of these?"
+    text="Happy to share more about the thinking behind them."
+    primary={{ href: "/contact.html", label: "Get in Touch" }}
+    secondary={{ href: "/work.html", label: "See My Experience" }}
+  />
 
-  <footer>
-    <div class="container">
-      <div class="footer-inner">
-        <span class="footer-logo">HD</span>
-        <nav class="footer-links">
-          <a href="work.html">Work</a>
-          <a href="projects.html">Projects</a>
-          <a href="about.html">About</a>
-          <a href="contact.html">Contact</a>
-          <a href="https://www.linkedin.com/in/helenedavid11" target="_blank" rel="noopener">LinkedIn</a>
-        </nav>
-        <p>© 2026 Hélène David · Leuven, Belgium</p>
-      </div>
-    </div>
-  </footer>
-
-  <script src="assets/js/script.js"></script>
-</body>
-</html>
+</BaseLayout>

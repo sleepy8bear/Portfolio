@@ -1,0 +1,22 @@
+---
+const year = new Date().getFullYear();
+const links = [
+  { href: '/work.html', label: 'Work' },
+  { href: '/projects.html', label: 'Projects' },
+  { href: '/about.html', label: 'About' },
+  { href: '/contact.html', label: 'Contact' },
+];
+---
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <span class="footer-logo">HD</span>
+      <nav class="footer-links">
+        {links.map((l) => <a href={l.href}>{l.label}</a>)}
+        <a href="https://www.linkedin.com/in/helenedavid11" target="_blank" rel="noopener">LinkedIn</a>
+      </nav>
+      <p>© {year} Hélène David · Leuven, Belgium</p>
+    </div>
+  </div>
+</footer>

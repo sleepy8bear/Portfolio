@@ -1,0 +1,26 @@
+---
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/work.html', label: 'Work' },
+  { href: '/projects.html', label: 'Projects' },
+  { href: '/about.html', label: 'About' },
+];
+const contact = { href: '/contact.html', label: 'Contact' };
+
+const normalise = (p: string) => p.replace(/index\.html$/, '').replace(/\.html$/, '').replace(/\/$/, '') || '/';
+const current = normalise(Astro.url.pathname);
+const isActive = (href: string) => normalise(href) === current;
+---
+
+<nav id="nav">
+  <a href="/" class="nav-logo">HD</a>
+  <ul class="nav-links">
+    {links.map((l) => (
+      <li><a href={l.href} class:list={{ active: isActive(l.href) }}>{l.label}</a></li>
+    ))}
+    <li><a href={contact.href} class:list={['nav-cta', { active: isActive(contact.href) }]}>{contact.label}</a></li>
+  </ul>
+  <button class="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
