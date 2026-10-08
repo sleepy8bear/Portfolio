@@ -6,7 +6,7 @@ window.addEventListener('scroll', () => {
 
 // Mobile menu
 const hamburger = document.querySelector('.hamburger');
-const navLinks  = document.querySelector('.nav-links');
+const navLinks  = document.querySelector('.nav-menu');
 
 function setMenu(open) {
   navLinks.classList.toggle('open', open);

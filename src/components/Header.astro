@@ -1,10 +1,11 @@
 ---
-const links = [
+// Links are split around the centred logo
+const left = [
   { href: '/', label: 'Home' },
   { href: '/work.html', label: 'Work' },
   { href: '/projects.html', label: 'Projects' },
-  { href: '/about.html', label: 'About' },
 ];
+const right = [{ href: '/about.html', label: 'About' }];
 const contact = { href: '/contact.html', label: 'Contact' };
 
 const normalise = (p: string) => p.replace(/index\.html$/, '').replace(/\.html$/, '').replace(/\/$/, '') || '/';
@@ -16,12 +17,19 @@ const isActive = (href: string) => normalise(href) === current;
   <a href="/" class="logo-badge nav-logo" aria-label="Hélène David — home">
     <img src="/logo.png" alt="Hélène David" width="400" height="400" />
   </a>
-  <ul class="nav-links">
-    {links.map((l) => (
-      <li><a href={l.href} class:list={{ active: isActive(l.href) }}>{l.label}</a></li>
-    ))}
-    <li><a href={contact.href} class:list={['nav-cta', { active: isActive(contact.href) }]}>{contact.label}</a></li>
-  </ul>
+  <div class="nav-menu">
+    <ul class="nav-links nav-left">
+      {left.map((l) => (
+        <li><a href={l.href} class:list={{ active: isActive(l.href) }}>{l.label}</a></li>
+      ))}
+    </ul>
+    <ul class="nav-links nav-right">
+      {right.map((l) => (
+        <li><a href={l.href} class:list={{ active: isActive(l.href) }}>{l.label}</a></li>
+      ))}
+      <li><a href={contact.href} class:list={['nav-cta', { active: isActive(contact.href) }]}>{contact.label}</a></li>
+    </ul>
+  </div>
   <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
