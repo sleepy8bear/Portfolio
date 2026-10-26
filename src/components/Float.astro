@@ -1,0 +1,59 @@
+---
+// Decorative pastel shape that drifts at its own speed while you scroll (parallax).
+interface Props {
+  kind: 'flower' | 'star' | 'blob' | 'ring' | 'squiggle';
+  color?: 'custard' | 'blush' | 'flamingo' | 'paper';
+  size?: number;
+  speed?: number;
+  spin?: boolean;
+  style?: string;
+}
+const { kind, color = 'blush', size = 120, speed = 0.1, spin = false, style = '' } = Astro.props;
+
+const fills = { custard: '#f3ddb2', blush: '#f3bcc4', flamingo: '#e58d98', paper: '#fffaf2' };
+const fill = fills[color];
+const ink = '#5f2621';
+
+function star(cx: number, cy: number, outer: number, inner: number, n: number) {
+  const pts: string[] = [];
+  for (let i = 0; i < n * 2; i++) {
+    const r = i % 2 === 0 ? outer : inner;
+    const a = (Math.PI * i) / n - Math.PI / 2;
+    pts.push(`${(cx + r * Math.cos(a)).toFixed(1)},${(cy + r * Math.sin(a)).toFixed(1)}`);
+  }
+  return pts.join(' ');
+}
+---
+
+<span class:list={['float', { 'float--spin': spin }]} data-speed={speed} style={`width:${size}px;${style}`} aria-hidden="true">
+  {kind === 'flower' && (
+    <svg viewBox="0 0 100 100" fill={fill} stroke={ink} stroke-width="3" stroke-linejoin="round">
+      {[0, 60, 120, 180, 240, 300].map((a) => (
+        <ellipse cx="50" cy="25" rx="13" ry="21" transform={`rotate(${a} 50 50)`} />
+      ))}
+      <circle cx="50" cy="50" r="11" fill="#f3ddb2" />
+    </svg>
+  )}
+  {kind === 'star' && (
+    <svg viewBox="0 0 100 100" fill={fill} stroke={ink} stroke-width="3" stroke-linejoin="round">
+      <polygon points={star(50, 50, 47, 33, 12)} />
+    </svg>
+  )}
+  {kind === 'blob' && (
+    <svg viewBox="0 0 100 100" fill={fill} stroke={ink} stroke-width="3" stroke-linejoin="round">
+      <path d="M50 8 C74 6 94 26 92 52 C90 78 68 94 44 90 C20 86 6 64 12 40 C16 20 30 10 50 8 Z" />
+    </svg>
+  )}
+  {kind === 'ring' && (
+    <svg viewBox="0 0 100 100" fill="none" stroke={ink} stroke-width="3">
+      <circle cx="50" cy="50" r="45" fill={fill} />
+      <circle cx="50" cy="50" r="28" fill="#fffaf2" />
+      <circle cx="50" cy="50" r="10" fill={ink} stroke="none" />
+    </svg>
+  )}
+  {kind === 'squiggle' && (
+    <svg viewBox="0 0 120 60" fill="none" stroke={ink} stroke-width="5" stroke-linecap="round">
+      <path d="M6 30 q 12 -30 24 0 t 24 0 t 24 0 t 24 0" />
+    </svg>
+  )}
+</span>

@@ -20,7 +20,7 @@ Personal portfolio website for Hélène David, International Business Management
 
 - **[Astro](https://astro.build)** — static site generator with components (`Header`, `Footer`, `PageHero`, `CtaStrip`, `Marquee`, `HeroArt`) and one shared layout
 - **CSS3** — custom properties, Grid, Flexbox; hand-drawn look (wobbly borders, hard shadows, SVG squiggles, paper grain) with no CSS framework
-- **Vanilla JS** — mobile menu, scroll reveals, project filter
+- **Vanilla JS** — no animation libraries: headline word reveals, parallax shapes, scroll-reactive ticker, trailing cursor, draggable stickers, animated accordion, project filter. Motion is switched off for `prefers-reduced-motion`; pointer effects run with a mouse only.
 - **Fonts** — [Fraunces](https://fonts.google.com/specimen/Fraunces) (display), [Instrument Sans](https://fonts.google.com/specimen/Instrument+Sans) (body), [Reenie Beanie](https://fonts.google.com/specimen/Reenie+Beanie) (handwriting) via Google Fonts
 - **Hosting** — GitHub Pages (deployed by GitHub Actions) + Cloudflare DNS
 
@@ -46,7 +46,8 @@ Portfolio/
 │   │   ├── Footer.astro
 │   │   ├── PageHero.astro    # Title block at the top of inner pages
 │   │   ├── CtaStrip.astro    # Big closing call-to-action
-│   │   ├── Marquee.astro     # Scrolling ticker band
+│   │   ├── Marquee.astro     # Scrolling ticker band (speeds up with scroll)
+│   │   ├── Float.astro       # Decorative parallax shapes
 │   │   └── HeroArt.astro     # Home hero collage + spinning badge
 │   ├── data/projects.ts      # All projects (edit here to add or change one)
 │   ├── layouts/BaseLayout.astro   # <head>, Header, Footer, script

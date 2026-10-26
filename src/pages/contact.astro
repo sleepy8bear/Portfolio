@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
+import Float from '../components/Float.astro';
 ---
 
 <BaseLayout
@@ -11,7 +12,9 @@ import PageHero from '../components/PageHero.astro';
     Say <em>hello</em>
   </PageHero>
 
-  <section>
+  <section class="has-float">
+    <Float kind="flower" color="blush" size={170} speed={0.12} spin style="right:-40px;top:6%" />
+    <Float kind="blob" color="custard" size={110} speed={-0.1} style="left:-30px;bottom:8%" />
     <div class="container">
       <span class="hand">write to me at</span>
       <a href="mailto:helene.david@proton.me" class="mail-big"><span class="squiggle">helene.david@proton.me</span></a>

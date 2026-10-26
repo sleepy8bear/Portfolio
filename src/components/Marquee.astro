@@ -1,13 +1,19 @@
 ---
-interface Props { items: string[] }
-const { items } = Astro.props;
+// Scrolling ticker band. main.js drives it so it speeds up (and can reverse) with your scroll;
+// without JS the CSS animation keeps it moving.
+interface Props {
+  items: string[];
+  tone?: 'flamingo' | 'custard' | 'blush';
+  reverse?: boolean;
+}
+const { items, tone = 'flamingo', reverse = false } = Astro.props;
 ---
 
 <div class="marquee-wrap" aria-hidden="true">
-<div class="marquee">
-  <div class="marquee-track">
-    <ul>{items.map((t) => <li>{t}</li>)}</ul>
-    <ul>{items.map((t) => <li>{t}</li>)}</ul>
+  <div class:list={['marquee', `marquee--${tone}`]} data-dir={reverse ? 'rev' : 'fwd'}>
+    <div class="marquee-track">
+      <ul>{items.map((t) => <li>{t}</li>)}</ul>
+      <ul>{items.map((t) => <li>{t}</li>)}</ul>
+    </div>
   </div>
-</div>
 </div>

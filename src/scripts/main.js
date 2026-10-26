@@ -1,12 +1,32 @@
-// Nav scroll effect
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 40);
-});
+// Navigation, reveals, and the motion layer. Everything decorative is skipped for
+// people who prefer reduced motion, and pointer effects only run with a mouse.
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fine = matchMedia('(pointer: fine)').matches && matchMedia('(hover: hover)').matches;
+const raf = requestAnimationFrame;
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 
-// Mobile menu
+/* ── Header: solid on scroll + hand-drawn progress line ── */
+const nav = document.getElementById('nav');
+let floats = [];
+let ticking = false;
+function onScroll() {
+  if (ticking) return;
+  ticking = true;
+  raf(() => {
+    ticking = false;
+    const y = window.scrollY;
+    nav.classList.toggle('scrolled', y > 40);
+    const max = document.documentElement.scrollHeight - innerHeight;
+    nav.style.setProperty('--p', max > 0 ? (y / max).toFixed(4) : '0');
+    updateFloats();
+  });
+}
+addEventListener('scroll', onScroll, { passive: true });
+addEventListener('resize', onScroll);
+
+/* ── Mobile menu ── */
 const hamburger = document.querySelector('.hamburger');
-const navLinks  = document.querySelector('.nav-menu');
+const navLinks = document.querySelector('.nav-menu');
 
 function setMenu(open) {
   navLinks.classList.toggle('open', open);
@@ -14,34 +34,266 @@ function setMenu(open) {
   hamburger.setAttribute('aria-expanded', String(open));
   const spans = hamburger.querySelectorAll('span');
   spans[0].style.transform = open ? 'translateY(8px) rotate(45deg)' : '';
-  spans[1].style.opacity   = open ? '0' : '';
+  spans[1].style.opacity = open ? '0' : '';
   spans[2].style.transform = open ? 'translateY(-8px) rotate(-45deg)' : '';
 }
-
 hamburger?.addEventListener('click', () => setMenu(!navLinks.classList.contains('open')));
-navLinks?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
-document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
-// Rotating a phone or resizing to desktop width must not leave the menu (and scroll lock) stuck open
-window.matchMedia('(min-width: 641px)').addEventListener('change', e => { if (e.matches) setMenu(false); });
+navLinks?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+// rotating a phone / resizing to desktop must not leave the menu (and scroll lock) stuck open
+matchMedia('(min-width: 641px)').addEventListener('change', (e) => { if (e.matches) setMenu(false); });
 
-// Reveal on scroll (elements start hidden only when the `js` class is on <html>)
-const revealables = document.querySelectorAll('.reveal');
+/* ── Headlines: split into words so each can slide up from behind a mask ── */
+function splitWords(root) {
+  const walk = (node) => {
+    [...node.childNodes].forEach((ch) => {
+      if (ch.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        ch.textContent.split(/(\s+)/).forEach((part) => {
+          if (!part) return;
+          if (/^\s+$/.test(part)) { frag.append(' '); return; }
+          const w = document.createElement('span');
+          const i = document.createElement('span');
+          w.className = 'w';
+          i.className = 'wi';
+          i.textContent = part;
+          w.append(i);
+          frag.append(w);
+        });
+        ch.replaceWith(frag);
+      } else if (ch.nodeType === 1 && ch.tagName !== 'BR') {
+        walk(ch);
+      }
+    });
+  };
+  walk(root);
+  root.querySelectorAll('.wi').forEach((el, i) => el.style.setProperty('--i', i));
+}
+document.querySelectorAll('[data-split]').forEach((el) => {
+  if (!reduce) splitWords(el);
+  el.classList.add('split');
+});
+
+/* ── Handwritten labels are "written on" ── */
+// (the clipped part is an inner wrapper: browsers don't report fully clipped elements as visible,
+// so the outer element is what gets observed)
+document.querySelectorAll('.eyebrow, .hand').forEach((el) => {
+  if (el.closest('.hero-art, .project, .cursor')) return;
+  const inner = document.createElement('span');
+  inner.className = 'write-i';
+  inner.append(...el.childNodes);
+  el.append(inner);
+  el.classList.add('write');
+});
+
+/* ── Reveal on scroll ── */
+function countUp(el) {
+  const end = Number(el.dataset.count);
+  if (reduce || !Number.isFinite(end)) return;
+  const t0 = performance.now();
+  const dur = 1100;
+  el.textContent = '0';
+  (function step(now) {
+    const k = clamp((now - t0) / dur, 0, 1);
+    el.textContent = String(Math.round(end * (1 - Math.pow(1 - k, 3))));
+    if (k < 1) raf(step);
+  })(t0);
+}
+const targets = document.querySelectorAll('.reveal, [data-split]:not([data-hero]), .write, [data-count]');
 if ('IntersectionObserver' in window) {
   const io = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
-      entry.target.classList.add('in');
-      io.unobserve(entry.target);
+      const el = entry.target;
+      el.classList.add('in');
+      if (el.hasAttribute('data-count')) countUp(el);
+      io.unobserve(el);
     });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-  revealables.forEach((el) => io.observe(el));
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  targets.forEach((el) => io.observe(el));
 } else {
-  revealables.forEach((el) => el.classList.add('in'));
+  targets.forEach((el) => el.classList.add('in'));
+}
+// hero titles play as soon as the web fonts are in (so words don't jump)
+const fontsReady = document.fonts?.ready
+  ? Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 900))])
+  : Promise.resolve();
+fontsReady.then(() => raf(() => {
+  document.querySelectorAll('[data-hero]').forEach((el) => {
+    el.style.setProperty('--base', '250ms');
+    el.classList.add('in');
+  });
+}));
+
+/* ── Floating shapes: parallax + slow rotation on scroll ── */
+floats = [...document.querySelectorAll('.float')].map((el) => ({
+  el,
+  host: el.offsetParent || el.parentElement,
+  k: parseFloat(el.dataset.speed) || 0.1,
+}));
+function updateFloats() {
+  if (reduce || !floats.length) return;
+  const vh = innerHeight;
+  floats.forEach((f) => {
+    const r = f.host.getBoundingClientRect();
+    if (r.bottom < -300 || r.top > vh + 300) return;
+    const d = r.top + r.height / 2 - vh / 2;
+    f.el.style.translate = `0 ${(-d * f.k).toFixed(1)}px`;
+    f.el.style.rotate = `${(d * f.k * 0.12).toFixed(1)}deg`;
+  });
+}
+updateFloats();
+
+/* ── Ticker bands: speed up (and reverse) with scroll velocity ── */
+const bands = [...document.querySelectorAll('.marquee')].map((m) => {
+  const track = m.querySelector('.marquee-track');
+  return { m, track, x: 0, half: 0, dir: m.dataset.dir === 'rev' ? 1 : -1, visible: true };
+});
+if (bands.length && !reduce) {
+  const measure = () => bands.forEach((b) => { b.half = b.track.firstElementChild.getBoundingClientRect().width; });
+  fontsReady.then(measure);
+  addEventListener('resize', measure);
+  if ('IntersectionObserver' in window) {
+    const vis = new IntersectionObserver((es) => es.forEach((e) => {
+      bands.find((b) => b.m === e.target).visible = e.isIntersecting;
+    }));
+    bands.forEach((b) => vis.observe(b.m));
+  }
+  let last = performance.now();
+  let lastY = scrollY;
+  let vel = 0;
+  const loop = (now) => {
+    const dt = Math.min(now - last, 50) / 1000;
+    last = now;
+    const dy = scrollY - lastY;
+    lastY = scrollY;
+    vel += (clamp(dy / Math.max(dt, 0.001), -2500, 2500) - vel) * 0.08;
+    bands.forEach((b) => {
+      if (!b.visible || !b.half) return;
+      const speed = 70 + vel * 0.35;
+      b.x += b.dir * speed * dt;
+      if (b.x <= -b.half) b.x += b.half;
+      if (b.x > 0) b.x -= b.half;
+      b.track.style.transform = `translate3d(${b.x.toFixed(1)}px,0,0)`;
+    });
+    raf(loop);
+  };
+  raf(loop);
 }
 
-// Projects page: filter by category
-const chips = document.querySelectorAll('[data-filter]');
+/* ── Pointer effects (mouse only) ── */
+if (fine && !reduce) {
+  // trailing cursor ring
+  const ring = document.querySelector('.cursor');
+  const label = ring?.querySelector('span');
+  let x = -100, y = -100, cx = -100, cy = -100;
+  addEventListener('pointermove', (e) => {
+    if (e.pointerType !== 'mouse') return;
+    x = e.clientX; y = e.clientY;
+    ring.classList.add('on');
+    const hot = e.target.closest?.('summary, a, button, .sticker, .stamp, .chip');
+    let text = '';
+    if (hot) {
+      if (hot.matches('summary')) text = hot.parentElement.open ? 'close' : 'open';
+      else if (hot.matches('a.paper')) text = 'view';
+      else if (hot.matches('.sticker, .stamp')) text = 'drag';
+    }
+    ring.classList.toggle('is-link', !!hot && !text);
+    ring.classList.toggle('has-label', !!text);
+    if (label) label.textContent = text;
+  }, { passive: true });
+  document.addEventListener('pointerleave', () => ring.classList.remove('on'));
+  addEventListener('pointerdown', () => ring.classList.add('down'));
+  addEventListener('pointerup', () => ring.classList.remove('down'));
+  (function follow() {
+    cx += (x - cx) * 0.2;
+    cy += (y - cy) * 0.2;
+    ring.style.transform = `translate3d(${cx.toFixed(1)}px,${cy.toFixed(1)}px,0) translate(-50%,-50%)`;
+    raf(follow);
+  })();
+
+  // hero collage drifts with the mouse
+  const art = document.querySelector('.hero-art');
+  if (art) {
+    let pending = false, mx = 0, my = 0;
+    addEventListener('pointermove', (e) => {
+      mx = (e.clientX / innerWidth - 0.5) * 2;
+      my = (e.clientY / innerHeight - 0.5) * 2;
+      if (pending) return;
+      pending = true;
+      raf(() => {
+        pending = false;
+        art.style.setProperty('--mx', mx.toFixed(3));
+        art.style.setProperty('--my', my.toFixed(3));
+      });
+    }, { passive: true });
+  }
+
+  // paper cards tilt towards the pointer
+  document.querySelectorAll('a.paper').forEach((card) => {
+    card.addEventListener('pointermove', (e) => {
+      const r = card.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      card.style.setProperty('--rx', `${(-py * 7).toFixed(2)}deg`);
+      card.style.setProperty('--ry', `${(px * 9).toFixed(2)}deg`);
+    });
+    card.addEventListener('pointerleave', () => {
+      card.style.removeProperty('--rx');
+      card.style.removeProperty('--ry');
+    });
+  });
+
+  // skills & certifications can be dragged around like stickers
+  let stackZ = 10;
+  document.querySelectorAll('.sticker, .stamp').forEach((el) => {
+    el.addEventListener('pointerdown', (e) => {
+      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      el.style.zIndex = String(++stackZ); // the one you just moved stays on top
+      const sx = e.clientX - (parseFloat(el.style.getPropertyValue('--dx')) || 0);
+      const sy = e.clientY - (parseFloat(el.style.getPropertyValue('--dy')) || 0);
+      el.setPointerCapture(e.pointerId);
+      el.classList.add('dragging');
+      const move = (ev) => {
+        el.style.setProperty('--dx', `${ev.clientX - sx}px`);
+        el.style.setProperty('--dy', `${ev.clientY - sy}px`);
+      };
+      const up = () => {
+        el.classList.remove('dragging');
+        el.removeEventListener('pointermove', move);
+        el.removeEventListener('pointerup', up);
+        el.removeEventListener('pointercancel', up);
+      };
+      el.addEventListener('pointermove', move);
+      el.addEventListener('pointerup', up);
+      el.addEventListener('pointercancel', up);
+    });
+  });
+}
+
+/* ── Projects: smooth open/close, filter, deep links ── */
 const rows = document.querySelectorAll('.project');
+rows.forEach((row) => {
+  const summary = row.querySelector('summary');
+  const detail = row.querySelector('.detail');
+  summary.addEventListener('click', (e) => {
+    if (reduce || !detail.animate) return;
+    e.preventDefault();
+    const ease = 'cubic-bezier(.2,.7,.2,1)';
+    if (row.open) {
+      row.classList.add('closing');
+      const h = detail.offsetHeight;
+      detail.animate([{ height: `${h}px`, opacity: 1 }, { height: '0px', opacity: 0 }], { duration: 350, easing: ease })
+        .onfinish = () => { row.open = false; row.classList.remove('closing'); };
+    } else {
+      row.open = true;
+      const h = detail.offsetHeight;
+      detail.animate([{ height: '0px', opacity: 0 }, { height: `${h}px`, opacity: 1 }], { duration: 480, easing: ease });
+    }
+  });
+});
+
+const chips = document.querySelectorAll('[data-filter]');
 const count = document.getElementById('project-count');
 chips.forEach((chip) => chip.addEventListener('click', () => {
   const f = chip.dataset.filter;
@@ -50,7 +302,13 @@ chips.forEach((chip) => chip.addEventListener('click', () => {
   rows.forEach((row) => {
     const show = f === 'all' || row.dataset.cat === f;
     row.hidden = !show;
-    if (show) n++;
+    row.classList.remove('pop');
+    if (show) {
+      row.style.setProperty('--d', `${n * 55}ms`);
+      void row.offsetWidth; // restart the animation
+      row.classList.add('pop');
+      n++;
+    }
   });
   if (count) count.textContent = String(n);
 }));
@@ -61,6 +319,8 @@ if (location.hash) {
   if (target && target.tagName === 'DETAILS') {
     target.open = true;
     target.classList.add('in');
-    setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150);
+    setTimeout(() => target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }), 150);
   }
 }
+
+onScroll();

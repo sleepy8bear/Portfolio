@@ -14,7 +14,7 @@ const { text, primary, secondary } = Astro.props;
   </svg>
   <span class="deco deco--circle" aria-hidden="true"></span>
   <div class="container">
-    <h2><slot /></h2>
+    <h2 data-split><slot /></h2>
     <p>{text}</p>
     <div class="cta-actions">
       <a href={primary.href} class="btn btn--flamingo">{primary.label}</a>

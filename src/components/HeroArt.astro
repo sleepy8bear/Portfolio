@@ -1,5 +1,6 @@
 ---
-// Abstract collage for the home hero: arch, sun, starburst, squiggle — plus a spinning text badge.
+// Abstract collage for the home hero: arch, sun, starburst, wave. It assembles itself on load,
+// floats gently, and drifts with the mouse (see main.js). Also a spinning text badge.
 function star(cx: number, cy: number, outer: number, inner: number, points: number) {
   const pts: string[] = [];
   for (let i = 0; i < points * 2; i++) {
@@ -10,26 +11,38 @@ function star(cx: number, cy: number, outer: number, inner: number, points: numb
   return pts.join(' ');
 }
 const burst = star(92, 150, 78, 54, 14);
+// a wave long enough to slide one full period (104px) without a gap
+const wave = 'M-94 392 ' + Array.from({ length: 11 }, (_, i) => (i === 0 ? 'q 26 -34 52 0' : 't 52 0')).join(' ');
 ---
 
 <div class="hero-art">
   <svg class="art" viewBox="0 0 400 480" role="img" aria-label="Abstract collage of an arch, a sun and a starburst">
-    <!-- arch -->
-    <path d="M44 462 V230 A156 156 0 0 1 356 230 V462 Z" fill="#f3bcc4" stroke="#5f2621" stroke-width="3" stroke-linejoin="round" />
-    <!-- inner arch line -->
-    <path d="M84 462 V232 A116 116 0 0 1 316 232 V462" fill="none" stroke="#5f2621" stroke-width="2.5" stroke-dasharray="2 9" stroke-linecap="round" />
-    <!-- sun -->
-    <circle cx="292" cy="122" r="60" fill="#e58d98" stroke="#5f2621" stroke-width="3" />
-    <!-- starburst -->
-    <polygon points={burst} fill="#f3ddb2" stroke="#5f2621" stroke-width="3" stroke-linejoin="round" />
-    <!-- ground squiggle -->
-    <path d="M10 392 q 26 -34 52 0 t 52 0 t 52 0 t 52 0 t 52 0 t 52 0 t 52 0" fill="none" stroke="#5f2621" stroke-width="4" stroke-linecap="round" />
-    <!-- small dots -->
-    <circle cx="206" cy="300" r="9" fill="#fffaf2" stroke="#5f2621" stroke-width="3" />
-    <circle cx="238" cy="326" r="5" fill="#5f2621" />
+    <defs>
+      <clipPath id="waveclip"><rect x="0" y="340" width="400" height="110" /></clipPath>
+    </defs>
+
+    <g class="px px-a">
+      <path class="arch" d="M44 462 V230 A156 156 0 0 1 356 230 V462 Z" fill="#f3bcc4" stroke="#5f2621" stroke-width="3" stroke-linejoin="round" />
+      <path class="arch-line" d="M84 462 V232 A116 116 0 0 1 316 232 V462" fill="none" stroke="#5f2621" stroke-width="2.5" stroke-dasharray="2 9" stroke-linecap="round" />
+    </g>
+
+    <g class="px px-b">
+      <circle class="sun" cx="292" cy="122" r="60" fill="#e58d98" stroke="#5f2621" stroke-width="3" />
+    </g>
+
+    <g class="px px-c">
+      <polygon class="burst" points={burst} fill="#f3ddb2" stroke="#5f2621" stroke-width="3" stroke-linejoin="round" />
+    </g>
+
+    <g class="px px-d">
+      <g clip-path="url(#waveclip)">
+        <path class="wave" d={wave} fill="none" stroke="#5f2621" stroke-width="4" stroke-linecap="round" />
+      </g>
+      <circle class="dot dot-1" cx="206" cy="300" r="9" fill="#fffaf2" stroke="#5f2621" stroke-width="3" />
+      <circle class="dot dot-2" cx="238" cy="326" r="5" fill="#5f2621" />
+    </g>
   </svg>
 
-  <!-- spinning text badge -->
   <svg class="badge" viewBox="0 0 200 200" aria-hidden="true">
     <defs><path id="ring" d="M100 100 m-74 0 a74 74 0 1 1 148 0 a74 74 0 1 1 -148 0" /></defs>
     <circle cx="100" cy="100" r="96" fill="#fffaf2" stroke="#5f2621" stroke-width="3" />

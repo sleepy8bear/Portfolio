@@ -2,6 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import CtaStrip from '../components/CtaStrip.astro';
+import Marquee from '../components/Marquee.astro';
+import Float from '../components/Float.astro';
 import { projects, categories } from '../data/projects';
 
 const pad = (n: number) => String(n).padStart(2, '0');
@@ -15,7 +17,11 @@ const pad = (n: number) => String(n).padStart(2, '0');
     Things I’ve <em>made</em>
   </PageHero>
 
-  <section>
+  <Marquee items={['Product', 'Marketing', 'Design', 'Open any row', 'Typography', 'Campaigns', 'Startups']} tone="custard" reverse />
+
+  <section class="has-float">
+    <Float kind="flower" color="blush" size={150} speed={0.12} spin style="right:-50px;top:14%" />
+    <Float kind="star" color="custard" size={100} speed={-0.1} style="left:-30px;top:58%" />
     <div class="container">
       <div class="filters" role="group" aria-label="Filter projects">
         <span class="hand">show me:</span>

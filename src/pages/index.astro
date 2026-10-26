@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroArt from '../components/HeroArt.astro';
 import Marquee from '../components/Marquee.astro';
 import CtaStrip from '../components/CtaStrip.astro';
+import Float from '../components/Float.astro';
 import { projects } from '../data/projects';
 
 const byId = (id: string) => projects.find((p) => p.id === id)!;
@@ -22,7 +23,7 @@ const ticker = ['Brand identity', 'Marketing strategy', 'Typography', 'Pitching'
           <span class="hand">hi, I’m</span>
           <svg viewBox="0 0 56 40" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6 C 14 4, 30 14, 44 30 M33 31 L45 31 L44 19" /></svg>
         </div>
-        <h1 class="hero-title"><span>Hélène</span><em>David</em></h1>
+        <h1 class="hero-title" data-split data-hero><span>Hélène</span><em>David</em></h1>
         <p class="hero-lead">
           International Business Management student based in Leuven, building{' '}
           <span class="squiggle">CalmCampus</span>, a privacy-first wellbeing app that reached the KU Leuven KICK finals.
@@ -38,12 +39,14 @@ const ticker = ['Brand identity', 'Marketing strategy', 'Typography', 'Pitching'
 
   <Marquee items={ticker} />
 
-  <section>
+  <section class="has-float">
+    <Float kind="star" color="custard" size={110} speed={0.14} spin style="right:3%;top:2%" />
+    <Float kind="ring" color="blush" size={90} speed={-0.1} style="left:-30px;bottom:6%" />
     <div class="container">
       <div class="section-head">
         <div>
           <span class="eyebrow">selected work</span>
-          <h2>A few things<br />I’m <em>proud</em> of</h2>
+          <h2 data-split>A few things<br />I’m <em>proud</em> of</h2>
         </div>
         <a href="/projects.html" class="link-arrow">All {projects.length} projects →</a>
       </div>
@@ -70,7 +73,9 @@ const ticker = ['Brand identity', 'Marketing strategy', 'Typography', 'Pitching'
     </div>
   </section>
 
-  <section class="tint">
+  <section class="tint has-float">
+    <Float kind="blob" color="flamingo" size={130} speed={0.12} style="left:-40px;top:10%" />
+    <Float kind="flower" color="blush" size={120} speed={-0.08} style="right:-20px;bottom:8%" />
     <div class="container intro">
       <p class="intro-quote reveal">
         I’m fascinated by how the world works, and by <em><span class="mark">decoding</span></em> how people think.
@@ -81,7 +86,7 @@ const ticker = ['Brand identity', 'Marketing strategy', 'Typography', 'Pitching'
           <li>21, living in Leuven</li>
           <li>IBM student, marketing option</li>
           <li>FR · EN · NL · DE</li>
-          <li>{projects.length} projects &amp; counting</li>
+          <li><b data-count={projects.length}>{projects.length}</b> projects &amp; counting</li>
         </ul>
       </div>
     </div>

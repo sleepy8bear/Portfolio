@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import CtaStrip from '../components/CtaStrip.astro';
+import Float from '../components/Float.astro';
 ---
 
 <BaseLayout
@@ -12,7 +13,9 @@ import CtaStrip from '../components/CtaStrip.astro';
     Work <em>experience</em>
   </PageHero>
 
-  <section>
+  <section class="has-float">
+    <Float kind="blob" color="blush" size={120} speed={0.12} style="right:-40px;top:20%" />
+    <Float kind="star" color="custard" size={90} speed={-0.1} spin style="left:-25px;top:62%" />
     <div class="container exp">
 
       <article class="exp-item reveal">
