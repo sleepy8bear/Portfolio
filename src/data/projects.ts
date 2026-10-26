@@ -13,7 +13,7 @@ export interface Project {
   featured?: boolean;
   /** Files attached on LinkedIn, saved to /public/projects/<id>/<slug>/NN.jpg (+ cover.jpg) */
   files?: Enclosure[];
-  link?: { label: string; href: string; note: string };
+  link?: { label: string; href: string; note: string; logo?: string };
 }
 
 export interface Enclosure {
@@ -51,7 +51,7 @@ export const projects: Project[] = [
       { slug: 'pitch-deck', title: 'Pitch deck', kind: 'deck', pages: 8, w: 1280, h: 720 },
       { slug: 'selection-email', title: 'KICK selection email', kind: 'image', pages: 1, w: 1280, h: 778 },
     ],
-    link: { label: 'CalmCampus website', href: 'https://cc.braunf.com/', note: 'cc.braunf.com' },
+    link: { label: 'CalmCampus website', href: 'https://cc.braunf.com/', note: 'cc.braunf.com', logo: '/projects/calmcampus/logo.svg' },
     featured: true,
   },
   {

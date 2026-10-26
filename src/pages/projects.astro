@@ -110,7 +110,10 @@ const fileCount = (p: (typeof projects)[number]) => (p.files?.length ?? 0) + (p.
             {p.link && (
               <a class="enclosure enclosure--link" href={p.link.href} target="_blank" rel="noopener" style={`--r:${enclTilt[(p.files?.length ?? 0) % enclTilt.length]}deg`}>
                 <span class="enc-clip" aria-hidden="true"></span>
-                <span class="enc-postcard"><b>↗</b><i>{p.link.note}</i></span>
+                <span class={`enc-postcard${p.link.logo ? ' enc-postcard--logo' : ''}`}>
+                  {p.link.logo ? <img src={p.link.logo} alt="" width="222" height="34" loading="lazy" /> : <b>↗</b>}
+                  <i>{p.link.note}{p.link.logo ? ' ↗' : ''}</i>
+                </span>
                 <span class="enc-cap">{p.link.label}</span>
                 <span class="enc-meta">{new URL(p.link.href).hostname.replace(/^www\./, '')} · opens a new tab</span>
               </a>

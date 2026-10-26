@@ -770,6 +770,9 @@ body.letter-open { overflow: hidden; }
 .enc-postcard { display: grid; place-items: center; align-content: center; gap: .35rem; aspect-ratio: 1.45; padding: 1rem; background: var(--custard); border: 2px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); text-align: center; }
 .enc-postcard b { font: 500 2.2rem/1 var(--display); }
 .enc-postcard i { font: italic 500 .95rem/1.15 var(--display); word-break: break-word; }
+.enc-postcard--logo { background: #fffaf2 var(--noise); gap: .7rem; }
+.enc-postcard--logo img { width: min(82%, 210px); height: auto; }
+.enc-postcard--logo i { font-size: .88rem; color: var(--muted); }
 
 /* ── The file viewer (page through a deck) ── */
 .viewer { width: min(1100px, calc(100vw - 1.5rem)); max-height: calc(100vh - 1.5rem); margin: auto; padding: 0; border: 0; background: none; color: var(--ink); overflow: visible; }
