@@ -4,6 +4,7 @@ import PageHero from '../components/PageHero.astro';
 import CtaStrip from '../components/CtaStrip.astro';
 import { projects } from '../data/projects';
 import Float from '../components/Float.astro';
+import AboutArt from '../components/AboutArt.astro';
 
 const education = [
   { year: 'Sep 2024 — Jul 2027', title: 'International Business Management', where: 'UC Leuven-Limburg · Marketing option', c: 'paper--custard', r: -1.2 },
@@ -21,11 +22,11 @@ const skills = [
 ] as const;
 
 const langs = [
-  ['French', 'native or bilingual'],
-  ['English', 'full professional'],
-  ['Dutch', 'limited working'],
-  ['German', 'limited working'],
-];
+  ['Bonjour', 'French', 'native or bilingual', 'var(--blush)', -1.5],
+  ['Hello', 'English', 'full professional', 'var(--custard)', 1.2],
+  ['Hoi', 'Dutch', 'limited working', 'var(--flamingo)', -1],
+  ['Hallo', 'German', 'limited working', 'var(--paper)', 1.6],
+] as const;
 
 const certs = [
   ['LinkedIn Marketing Strategy', 'var(--custard)', -4],
@@ -51,6 +52,8 @@ const certs = [
         <p class="reveal">Before that I studied Political Science and Biomedical Sciences at ULB, after finishing the European Baccalaureate at the European School of Luxembourg I. In summer 2026 I took part in the International Summer Program in Linear Algebra at Korea University.</p>
         <p class="reveal">These days most of my work sits where brand, marketing and technology meet: a wellbeing startup, campaigns, and quite a lot of typography.</p>
       </div>
+      <div class="about-side">
+      <AboutArt />
       <div class="note-card reveal">
         <span class="hand">the short version</span>
         <ul>
@@ -59,6 +62,7 @@ const certs = [
           <li><b data-count={projects.length}>{projects.length}</b> projects so far</li>
           <li>4 languages</li>
         </ul>
+      </div>
       </div>
     </div>
   </section>
@@ -81,7 +85,7 @@ const certs = [
   <section class="has-float">
     <Float kind="squiggle" color="blush" size={170} speed={0.1} style="right:4%;top:6%" />
     <div class="container">
-      <div class="section-head"><div><span class="eyebrow">skills</span><h2 data-split>Things I’m <em>good</em> at</h2></div></div>
+      <div class="section-head"><div><span class="eyebrow">skills</span><h2 data-split>Things I’m <em>good</em> at</h2></div><span class="hand hint">psst: you can drag these around <svg viewBox="0 0 56 40" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M52 6 C 40 4, 24 14, 10 30 M21 31 L9 31 L10 19" /></svg></span></div>
       <div class="skills-wrap">
         {skills.map(([label, bg, r]) => <span class="sticker reveal" style={`--c:${bg}; --r:${r}deg`}>{label}</span>)}
       </div>
@@ -92,7 +96,13 @@ const certs = [
     <div class="container">
       <div class="section-head"><div><span class="eyebrow">languages</span><h2 data-split>I speak <em>four</em></h2></div></div>
       <div class="langs">
-        {langs.map(([name, level]) => <div class="lang reveal"><b>{name}</b><span>{level}</span></div>)}
+        {langs.map(([hello, name, level, bg, r]) => (
+          <div class="lang reveal" style={`--c:${bg}; --r:${r}deg`}>
+            <i class="hello">{hello}</i>
+            <b>{name}</b>
+            <span>{level}</span>
+          </div>
+        ))}
       </div>
     </div>
   </section>

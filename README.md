@@ -11,10 +11,10 @@ Personal portfolio website for Hélène David, International Business Management
 | Page | Description |
 |------|-------------|
 | `/` | Landing page — hero collage, marquee, selected work |
-| `/work.html` | Full experience timeline |
+| `/work.html` | Experience as a hand-drawn timeline of taped paper cards |
 | `/projects.html` | Projects as sealed envelopes: click one to open the full letter (previous/next, deep links like `#calmcampus`) |
-| `/about.html` | Bio, education, skills, languages & certifications |
-| `/contact.html` | Email and LinkedIn |
+| `/about.html` | Bio with an arch collage, education, draggable skill stickers, language speech bubbles & certification stamps |
+| `/contact.html` | A big postcard: stamp, postmark, email and LinkedIn |
 
 ## Tech Stack
 
@@ -49,6 +49,8 @@ Portfolio/
 │   │   ├── Marquee.astro     # Scrolling ticker band (speeds up with scroll)
 │   │   ├── Float.astro       # Decorative parallax shapes
 │   │   ├── InstagramCard.astro  # Postcard + click-to-load Instagram feed preview
+│   │   ├── TimelineNode.astro   # Stops on the Work page timeline
+│   │   ├── AboutArt.astro       # Arch collage on the About page
 │   │   └── HeroArt.astro     # Home hero collage + spinning badge
 │   ├── data/projects.ts      # All projects (edit here to add or change one)
 │   ├── layouts/BaseLayout.astro   # <head>, Header, Footer, script

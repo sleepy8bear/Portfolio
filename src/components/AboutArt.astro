@@ -1,0 +1,27 @@
+---
+// Collage "portrait frame" for the About page: an arch window with a sun, a starburst,
+// a wavy ground line, and the signature logo in the middle.
+function star(cx: number, cy: number, outer: number, inner: number, n: number) {
+  const pts: string[] = [];
+  for (let i = 0; i < n * 2; i++) {
+    const r = i % 2 === 0 ? outer : inner;
+    const a = (Math.PI * i) / n - Math.PI / 2;
+    pts.push(`${(cx + r * Math.cos(a)).toFixed(1)},${(cy + r * Math.sin(a)).toFixed(1)}`);
+  }
+  return pts.join(' ');
+}
+---
+
+<div class="about-art" aria-hidden="true">
+  <svg viewBox="0 0 320 380" overflow="visible">
+    <path d="M24 362 V160 A136 136 0 0 1 296 160 V362 Z" fill="#f3bcc4" stroke="#5f2621" stroke-width="3" stroke-linejoin="round" />
+    <path d="M58 362 V162 A102 102 0 0 1 262 162 V362" fill="none" stroke="#5f2621" stroke-width="2.4" stroke-dasharray="2 9" stroke-linecap="round" />
+    <circle cx="250" cy="82" r="42" fill="#e58d98" stroke="#5f2621" stroke-width="3" />
+    <polygon points={star(62, 98, 44, 30, 13)} fill="#f3ddb2" stroke="#5f2621" stroke-width="3" stroke-linejoin="round" />
+    <path d="M-6 330 q 22 -28 44 0 t 44 0 t 44 0 t 44 0 t 44 0 t 44 0 t 44 0 t 44 0" fill="none" stroke="#5f2621" stroke-width="3.5" stroke-linecap="round" />
+    <circle cx="228" cy="222" r="7" fill="#fffaf2" stroke="#5f2621" stroke-width="3" />
+    <circle cx="252" cy="244" r="4" fill="#5f2621" />
+  </svg>
+  <img class="about-logo" src="/logo.png" alt="" width="400" height="400" loading="lazy" />
+  <span class="about-hi hand">that’s me, sort of</span>
+</div>

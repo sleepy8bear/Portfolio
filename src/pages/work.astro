@@ -4,6 +4,7 @@ import PageHero from '../components/PageHero.astro';
 import CtaStrip from '../components/CtaStrip.astro';
 import Float from '../components/Float.astro';
 import InstagramCard from '../components/InstagramCard.astro';
+import TimelineNode from '../components/TimelineNode.astro';
 ---
 
 <BaseLayout
@@ -21,7 +22,8 @@ import InstagramCard from '../components/InstagramCard.astro';
 
       <article class="exp-item reveal">
         <div class="exp-date">Jan 2026 — now<small>Leuven</small></div>
-        <div class="exp-body">
+        <div class="exp-node"><TimelineNode kind="star" color="flamingo" /></div>
+        <div class="exp-body exp-card exp-card--feature">
           <h3>CEO &amp; Co-Founder <span class="now">current</span></h3>
           <span class="exp-org"><span class="squiggle">CalmCampus</span></span>
           <p>Building CalmCampus, a privacy-first student wellbeing platform developed through the KU Leuven KICK Challenge and in conversation with KU Leuven STUVO, the university’s student services organisation.</p>
@@ -41,7 +43,8 @@ import InstagramCard from '../components/InstagramCard.astro';
 
       <article class="exp-item reveal">
         <div class="exp-date">Sep 2025 — now<small>Leuven</small></div>
-        <div class="exp-body">
+        <div class="exp-node"><TimelineNode kind="circle" color="custard" /></div>
+        <div class="exp-body exp-card" style="--r:.7deg">
           <h3>Head of Social Media <span class="now">current</span></h3>
           <span class="exp-org">Insignia</span>
           <p>I oversee a small team that manages the online presence of Insignia, an international student organisation, and creates engaging digital content.</p>
@@ -51,12 +54,19 @@ import InstagramCard from '../components/InstagramCard.astro';
 
       <article class="exp-item reveal">
         <div class="exp-date">Sep 2024 — Sep 2025<small>Leuven</small></div>
-        <div class="exp-body">
+        <div class="exp-node"><TimelineNode kind="ring" color="blush" /></div>
+        <div class="exp-body exp-card" style="--r:-.6deg">
           <h3>Member</h3>
           <span class="exp-org">Insignia</span>
           <p>As a member of Insignia, an international student organisation, I helped plan and coordinate student-focused events.</p>
         </div>
       </article>
+
+      <div class="exp-item exp-item--end reveal" aria-hidden="true">
+        <div class="exp-date"></div>
+        <div class="exp-node"><TimelineNode kind="dot" /></div>
+        <p class="exp-end hand">to be continued ✺</p>
+      </div>
 
     </div>
   </section>
