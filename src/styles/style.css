@@ -102,10 +102,9 @@ p { max-width: 62ch; }
   align-items: center;
   justify-content: space-between;
   padding: .8rem var(--gutter);
-  transition: background .25s, border-color .25s;
-  border-bottom: 2px solid transparent;
+  background: var(--paper);
+  border-bottom: 2px solid var(--ink);
 }
-#nav.scrolled { background: var(--paper); border-bottom-color: var(--ink); }
 
 .logo-badge {
   display: block;
