@@ -51,6 +51,7 @@ export const projects: Project[] = [
       { slug: 'pitch-deck', title: 'Pitch deck', kind: 'deck', pages: 8, w: 1280, h: 720 },
       { slug: 'selection-email', title: 'KICK selection email', kind: 'image', pages: 1, w: 1280, h: 778 },
     ],
+    link: { label: 'CalmCampus website', href: 'https://cc.braunf.com/', note: 'cc.braunf.com' },
     featured: true,
   },
   {
