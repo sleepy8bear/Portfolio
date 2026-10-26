@@ -644,7 +644,6 @@ a.paper { transition-duration: .2s, .35s, .3s; }
 .env-flap polygon { fill: var(--env); fill: color-mix(in srgb, var(--env) 86%, #fff); stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
 
 .env-date { position: absolute; left: 50%; top: 9px; z-index: 5; font-family: var(--hand); font-size: 1.45rem; line-height: 1; color: var(--ink); white-space: nowrap; transform: translateX(-62%) rotate(-3deg); }
-.env-stamp { position: absolute; right: 12px; top: 10px; z-index: 5; padding: .4rem .55rem; background: #fffaf2; border: 2px dashed var(--ink); box-shadow: 0 0 0 3px #fffaf2; font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; transform: rotate(5deg); }
 .env-seal {
   position: absolute; left: 50%; top: 44%; z-index: 5;
   width: 46px; height: 46px; margin: -23px 0 0 -23px;
