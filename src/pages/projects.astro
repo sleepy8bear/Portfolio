@@ -26,15 +26,6 @@ const fileCount = (p: (typeof projects)[number]) => (p.files?.length ?? 0) + (p.
     <Float kind="flower" color="blush" size={150} speed={0.12} spin style="right:-50px;top:14%" />
     <Float kind="star" color="custard" size={100} speed={-0.1} style="left:-30px;top:58%" />
     <div class="container">
-      <div class="filters" role="group" aria-label="Filter projects">
-        <span class="hand">show me:</span>
-        <button class="chip" data-filter="all" aria-pressed="true">All</button>
-        {Object.entries(categories).map(([key, label]) => (
-          <button class="chip" data-filter={key} aria-pressed="false">{label}</button>
-        ))}
-        <span class="hand" style="margin-left:auto"><span id="project-count">{projects.length}</span> letters</span>
-      </div>
-
       <div class="mailbox">
         {projects.map((p, i) => (
           <button

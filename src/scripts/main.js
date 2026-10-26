@@ -191,7 +191,7 @@ if (fine && !reduce) {
     if (e.pointerType !== 'mouse') return;
     x = e.clientX; y = e.clientY;
     ring.classList.add('on');
-    const hot = e.target.closest?.('a, button, .sticker, .stamp, .chip');
+    const hot = e.target.closest?.('a, button, .sticker, .stamp');
     let text = '';
     if (hot) {
       if (hot.matches('.envelope')) text = 'open';
@@ -346,7 +346,7 @@ if (envelopes.length && letter) {
   const counter = letter.querySelector('.sheet-count');
   let current = null;
   let busy = false;
-  const visible = () => envelopes.filter((e) => !e.hidden);
+  const visible = () => envelopes;
 
   function fill(env) {
     const tpl = document.getElementById(`tpl-${env.dataset.id}`);
@@ -425,25 +425,25 @@ if (envelopes.length && letter) {
   }
 }
 
-/* ── Project filter ── */
-const chips = document.querySelectorAll('[data-filter]');
-const count = document.getElementById('project-count');
-chips.forEach((chip) => chip.addEventListener('click', () => {
-  const f = chip.dataset.filter;
-  chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
-  let n = 0;
-  envelopes.forEach((env) => {
-    const show = f === 'all' || env.dataset.cat === f;
-    env.hidden = !show;
-    env.classList.remove('pop');
-    if (show) {
-      env.style.setProperty('--d', `${n * 55}ms`);
-      void env.offsetWidth; // restart the animation
-      env.classList.add('pop');
-      n++;
+/* ── Instagram preview: nothing is loaded from Instagram until someone asks for it ── */
+document.querySelectorAll('[data-insta-toggle]').forEach((btn) => {
+  const box = document.getElementById(btn.dataset.target);
+  const url = btn.dataset.embed;
+  btn.addEventListener('click', () => {
+    const open = box.hidden;
+    if (open && !box.querySelector('iframe')) {
+      const frame = document.createElement('iframe');
+      frame.src = url;
+      frame.title = btn.dataset.title || 'Instagram preview';
+      frame.loading = 'lazy';
+      frame.setAttribute('allowtransparency', 'true');
+      frame.referrerPolicy = 'no-referrer';
+      box.append(frame);
     }
+    box.hidden = !open;
+    btn.setAttribute('aria-expanded', String(open));
+    btn.querySelector('span').textContent = open ? 'Hide the preview' : 'Preview the feed';
   });
-  if (count) count.textContent = String(n);
-}));
+});
 
 onScroll();
