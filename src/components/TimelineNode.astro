@@ -1,7 +1,7 @@
 ---
 // A stop on the hand-drawn line that links the roles on the Work page.
 interface Props {
-  kind: 'star' | 'circle' | 'ring' | 'dot';
+  kind: 'star' | 'circle' | 'ring';
   color?: 'flamingo' | 'custard' | 'blush' | 'paper';
 }
 const { kind, color = 'blush' } = Astro.props;
@@ -29,6 +29,5 @@ function star(cx: number, cy: number, outer: number, inner: number, n: number) {
         <circle cx="24" cy="24" r="8" fill="#fffaf2" />
       </>
     )}
-    {kind === 'dot' && <circle cx="24" cy="24" r="9" fill={ink} stroke="none" />}
   </svg>
 </span>
