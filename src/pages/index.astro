@@ -1,107 +1,97 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroArt from '../components/HeroArt.astro';
+import Marquee from '../components/Marquee.astro';
 import CtaStrip from '../components/CtaStrip.astro';
+import { projects } from '../data/projects';
+
+const byId = (id: string) => projects.find((p) => p.id === id)!;
+const main = byId('calmcampus');
+const side = [byId('study-far-far-away'), byId('snow-white')];
+const ticker = ['Brand identity', 'Marketing strategy', 'Typography', 'Pitching', 'Product design', 'SEO', 'Campaign design', 'Startups'];
 ---
 
 <BaseLayout
   title="Hélène David — Portfolio"
-  description="Hélène David — International Business Management student (Marketing option) and CEO & co-founder of CalmCampus. Based in Leuven, Belgium."
+  description="Hélène David — International Business Management student (marketing option), CEO & co-founder of CalmCampus, working across brand, marketing and product. Based in Leuven, Belgium."
 >
-  <!-- HERO -->
-  <section id="hero">
-    <div class="hero-content">
-      <p class="hero-tag">International Business Management · Marketing · Leuven, Belgium</p>
-      <h1>Hélène<br /><em>David</em></h1>
-      <p class="hero-sub">Building ventures at the intersection of technology, ethics, and human behaviour.</p>
-      <div class="hero-actions">
-        <a href="/work.html" class="btn btn-primary">View My Work</a>
-        <a href="/about.html" class="btn btn-ghost">About Me</a>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="hero-hello">
+          <span class="hand">hi, I’m</span>
+          <svg viewBox="0 0 56 40" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6 C 14 4, 30 14, 44 30 M33 31 L45 31 L44 19" /></svg>
+        </div>
+        <h1 class="hero-title"><span>Hélène</span><em>David</em></h1>
+        <p class="hero-lead">
+          International Business Management student based in Leuven, building{' '}
+          <span class="squiggle">CalmCampus</span>, a privacy-first wellbeing app that reached the KU Leuven KICK finals.
+        </p>
+        <div class="hero-actions">
+          <a href="/projects.html" class="btn btn--tomato">See the projects ↘</a>
+          <a href="/about.html" class="btn">About me</a>
+        </div>
       </div>
-    </div>
-    <div class="hero-scroll">
-      <span>Scroll</span>
-      <div class="scroll-line"></div>
+      <HeroArt />
     </div>
   </section>
 
-  <!-- STATS -->
-  <div class="stats-strip">
-    <div class="stat-item">
-      <span class="stat-num">2+</span>
-      <span class="stat-label">Years at Insignia</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-num">4</span>
-      <span class="stat-label">Languages spoken</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-num">5</span>
-      <span class="stat-label">Certifications</span>
-    </div>
-  </div>
+  <Marquee items={ticker} />
 
-  <!-- FEATURED WORK -->
-  <section class="featured-section">
+  <section>
     <div class="container">
-      <span class="section-label">Featured Work</span>
-      <h2>What I'm Building</h2>
-      <a href="/work.html" class="featured-card">
+      <div class="section-head">
         <div>
-          <div class="featured-label">CEO &amp; Co-Founder · Jan 2026 — Present</div>
-          <h3>CalmCampus</h3>
-          <p>A privacy-first student wellbeing platform developed through the KU Leuven KICK Challenge. CalmCampus identifies early burnout risk through passive behavioural signals and on-device AI — without daily self-reporting or individual surveillance.</p>
-          <div class="featured-tags">
-            <span>Product Strategy</span>
-            <span>EdTech</span>
-            <span>Privacy-first AI</span>
-            <span>Stakeholder Engagement</span>
-            <span>KU Leuven KICK</span>
-          </div>
-          <span class="btn btn-primary" style="pointer-events:none;">See All Work →</span>
+          <span class="eyebrow">selected work</span>
+          <h2>A few things<br />I’m <em>proud</em> of</h2>
         </div>
-        <div class="featured-arrow">↗</div>
-      </a>
+        <a href="/projects.html" class="link-arrow">All {projects.length} projects →</a>
+      </div>
+
+      <div class="featured">
+        <a href={`/projects.html#${main.id}`} class="paper paper--butter reveal" style="--r:-1deg">
+          <div class="meta"><span>{main.kind}</span><span>{main.date}</span></div>
+          <h3>{main.title}</h3>
+          <p>{main.summary} Developed for the KU Leuven KICK Challenge 2026, where it reached the finals.</p>
+          <div class="tags">{main.tags.map((t) => <span>{t}</span>)}</div>
+          <span class="big-no" aria-hidden="true">01</span>
+        </a>
+
+        <div class="paper-stack">
+          {side.map((p, i) => (
+            <a href={`/projects.html#${p.id}`} class:list={['paper', i === 0 ? 'paper--lilac' : 'paper--tomato', 'reveal']} style={`--r:${i === 0 ? 1.5 : -1.5}deg; --tape:${i === 0 ? 4 : -5}deg`}>
+              <div class="meta"><span>{p.kind}</span><span>{p.date}</span></div>
+              <h3 style="font-size: clamp(1.6rem, 3vw, 2.4rem)">{p.title}</h3>
+              <p>{p.summary}</p>
+            </a>
+          ))}
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- OTHER WORK -->
-  <section class="other-work-section">
-    <div class="container">
-      <span class="section-label">Also</span>
-      <h2>Beyond CalmCampus</h2>
-      <div class="work-grid">
-        <div class="work-card">
-          <div class="work-card-meta">
-            <span class="work-card-role">Head of Social Media</span>
-            <span class="work-card-date">Sep 2025 — Present</span>
-          </div>
-          <h3>Insignia</h3>
-          <p>Overseeing a small team that manages the online presence of this international student organisation and creates engaging digital content.</p>
-          <div class="work-card-tags">
-            <span>Social Media</span><span>Content</span><span>Team Lead</span>
-          </div>
-        </div>
-        <div class="work-card">
-          <div class="work-card-meta">
-            <span class="work-card-role">Summer Program</span>
-            <span class="work-card-date">Jun — Jul 2026</span>
-          </div>
-          <h3>Korea University</h3>
-          <p>International Summer Program in Linear Algebra.</p>
-          <div class="work-card-tags">
-            <span>Linear Algebra</span><span>International</span>
-          </div>
-        </div>
+  <section class="tint">
+    <div class="container intro">
+      <p class="intro-quote reveal">
+        I’m fascinated by how the world works, and by <em><span class="mark">decoding</span></em> how people think.
+      </p>
+      <div class="note-card reveal">
+        <span class="hand">quick facts</span>
+        <ul>
+          <li>21, living in Leuven</li>
+          <li>IBM student, marketing option</li>
+          <li>FR · EN · NL · DE</li>
+          <li>{projects.length} projects &amp; counting</li>
+        </ul>
       </div>
-      <a href="/projects.html" class="btn btn-ghost" style="margin-top: 2rem;">See all projects →</a>
     </div>
   </section>
 
   <CtaStrip
-    title="Let's Connect"
-    text="Interested in CalmCampus, student wellbeing, or just want to say hello? Get in touch."
-    primary={{ href: "/contact.html", label: "Get in Touch" }}
-    secondary={{ href: "/about.html", label: "Learn More About Me" }}
-  />
-
+    text="About CalmCampus, a project, student wellbeing, or just to say hi."
+    primary={{ href: '/contact.html', label: 'Say hello' }}
+    secondary={{ href: '/work.html', label: 'See my experience' }}
+  >
+    Let’s make <em>something</em>.
+  </CtaStrip>
 </BaseLayout>

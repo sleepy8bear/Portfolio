@@ -8,88 +8,59 @@ import CtaStrip from '../components/CtaStrip.astro';
   title="Work — Hélène David"
   description="Experience of Hélène David — CEO & co-founder of CalmCampus and Head of Social Media at Insignia."
 >
-  <PageHero label="Experience" lead="Building CalmCampus and leading social media at Insignia, an international student organisation.">
-    What I've <em>Built</em>
+  <PageHero label="experience" lead="Building CalmCampus and leading social media at Insignia, an international student organisation.">
+    Work <em>experience</em>
   </PageHero>
 
-  <!-- TIMELINE -->
-  <section style="background: var(--bg2);">
-    <div class="container">
-      <div class="timeline">
+  <section>
+    <div class="container exp">
 
-        <div class="timeline-item featured">
-          <div class="timeline-meta">
-            <span class="timeline-date">Jan 2026 — Present</span>
-            <span class="timeline-badge">Current</span>
-          </div>
-          <div class="timeline-body">
-            <div class="timeline-header">
-              <h3>CEO &amp; Co-Founder</h3>
-              <span class="timeline-org">CalmCampus</span>
-            </div>
-            <p>Building CalmCampus — a privacy-first student wellbeing platform developed through the KU Leuven KICK Challenge in partnership with KU Leuven STUVO. The platform identifies early burnout risk through passive behavioural signals and on-device AI, without daily self-reporting or individual surveillance.</p>
-            <ul class="timeline-highlights">
-              <li>Defining business strategy, value proposition, and go-to-market approach</li>
-              <li>Leading stakeholder conversations with universities, student services, and partners</li>
-              <li>Translating student wellbeing needs into a scalable, ethically responsible model</li>
-              <li>Developing pitch, partnership strategy, and early validation roadmap</li>
-              <li>Aligning product vision, impact goals, and business feasibility</li>
-            </ul>
-            <div class="timeline-tags">
-              <span>Product Strategy</span>
-              <span>Stakeholder Engagement</span>
-              <span>EdTech</span>
-              <span>Privacy-first AI</span>
-              <span>Go-to-Market</span>
-            </div>
-          </div>
+      <article class="exp-item reveal">
+        <div class="exp-date">Jan 2026 — now<small>Leuven</small></div>
+        <div class="exp-body">
+          <h3>CEO &amp; Co-Founder <span class="now">current</span></h3>
+          <span class="exp-org"><span class="squiggle">CalmCampus</span></span>
+          <p>Building CalmCampus, a privacy-first student wellbeing platform developed through the KU Leuven KICK Challenge and in conversation with KU Leuven STUVO, the university’s student services organisation.</p>
+          <p>CalmCampus helps universities support students earlier by identifying changes linked to burnout risk through passive behavioural signals and on-device AI, without relying on daily self-reporting or individual surveillance.</p>
+          <p>As co-founder and CEO, I lead the business development and strategic direction: value proposition, stakeholder engagement, market positioning, partnership development and early go-to-market planning. My focus is on making CalmCampus not only technically feasible, but also commercially viable, ethically responsible and suitable for real university deployment.</p>
+          <ul>
+            <li>Defining the business strategy, value proposition and go-to-market approach</li>
+            <li>Leading stakeholder conversations with universities, student services and potential partners</li>
+            <li>Translating student wellbeing needs into a scalable and sustainable business model</li>
+            <li>Developing the pitch, partnership strategy and early validation roadmap</li>
+            <li>Collaborating on pilot planning with KU Leuven KICK and KU Leuven STUVO</li>
+            <li>Aligning the product vision, impact goals and business feasibility</li>
+          </ul>
+          <a href="/projects.html#calmcampus" class="link-arrow">Read the project story →</a>
         </div>
+      </article>
 
-        <div class="timeline-item">
-          <div class="timeline-meta">
-            <span class="timeline-date">Sep 2025 — Present</span>
-            <span class="timeline-badge">Current</span>
-          </div>
-          <div class="timeline-body">
-            <div class="timeline-header">
-              <h3>Head of Social Media</h3>
-              <span class="timeline-org">Insignia</span>
-            </div>
-            <p>Overseeing a small team to manage the organisation's online presence and create engaging digital content for this international student organisation.</p>
-            <div class="timeline-tags">
-              <span>Social Media Strategy</span>
-              <span>Content Creation</span>
-              <span>Team Leadership</span>
-            </div>
-          </div>
+      <article class="exp-item reveal">
+        <div class="exp-date">Sep 2025 — now<small>Leuven</small></div>
+        <div class="exp-body">
+          <h3>Head of Social Media <span class="now">current</span></h3>
+          <span class="exp-org">Insignia</span>
+          <p>I oversee a small team that manages the online presence of Insignia, an international student organisation, and creates engaging digital content.</p>
         </div>
+      </article>
 
-        <div class="timeline-item">
-          <div class="timeline-meta">
-            <span class="timeline-date">Sep 2024 — Sep 2025</span>
-          </div>
-          <div class="timeline-body">
-            <div class="timeline-header">
-              <h3>Member</h3>
-              <span class="timeline-org">Insignia</span>
-            </div>
-            <p>Helped plan and coordinate student-focused events as a member of this international student organisation.</p>
-            <div class="timeline-tags">
-              <span>Event Planning</span>
-              <span>Student Events</span>
-            </div>
-          </div>
+      <article class="exp-item reveal">
+        <div class="exp-date">Sep 2024 — Sep 2025<small>Leuven</small></div>
+        <div class="exp-body">
+          <h3>Member</h3>
+          <span class="exp-org">Insignia</span>
+          <p>As a member of Insignia, an international student organisation, I helped plan and coordinate student-focused events.</p>
         </div>
+      </article>
 
-      </div>
     </div>
   </section>
 
   <CtaStrip
-    title="Interested in working together?"
-    text="I'm always open to new conversations — whether about a project, partnership, or just to connect."
-    primary={{ href: "/contact.html", label: "Get in Touch" }}
-    secondary={{ href: "/about.html", label: "More About Me" }}
-  />
-
+    text="Whether it’s a project, a partnership or just a chat, I’d love to hear from you."
+    primary={{ href: '/contact.html', label: 'Get in touch' }}
+    secondary={{ href: '/projects.html', label: 'See the projects' }}
+  >
+    Work with <em>me</em>?
+  </CtaStrip>
 </BaseLayout>

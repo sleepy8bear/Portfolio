@@ -2,164 +2,113 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import CtaStrip from '../components/CtaStrip.astro';
+import { projects } from '../data/projects';
+
+const education = [
+  { year: 'Sep 2024 — Jul 2027', title: 'International Business Management', where: 'UC Leuven-Limburg · Marketing option', c: 'paper--butter', r: -1.2 },
+  { year: 'Jun — Jul 2026', title: 'International Summer Program: Linear Algebra', where: 'Korea University', c: 'paper--lilac', r: 1.4 },
+  { year: 'Feb — Jun 2024', title: 'Bachelor of Science, Biomedical Sciences', where: 'Université Libre de Bruxelles (ULB)', c: '', r: 0.8 },
+  { year: 'Sep 2023 — Jan 2024', title: 'Bachelor of Arts, Political Science', where: 'Université Libre de Bruxelles (ULB)', c: '', r: -1 },
+  { year: 'Sep 2009 — Jul 2023', title: 'European Baccalaureate', where: 'European School of Luxembourg I', c: 'paper--tomato', r: 1.1 },
+];
+
+const skills = [
+  ['Product innovation', 'var(--butter)', -2], ['Pitch & presentation', 'var(--lilac)', 1.5], ['Brand identity', 'var(--tomato)', -1],
+  ['Typography', 'var(--paper)', 2], ['Marketing strategy', 'var(--lilac)', -1.5], ['Digital marketing', 'var(--butter)', 1],
+  ['SEO', 'var(--tomato)', -2], ['Graphic design', 'var(--butter)', 1.5], ['Adobe Photoshop', 'var(--paper)', -1],
+  ['Entrepreneurship', 'var(--lilac)', 2], ['Linear algebra', 'var(--butter)', -1.5], ['Social media', 'var(--tomato)', 1],
+] as const;
+
+const langs = [
+  ['French', 'native or bilingual'],
+  ['English', 'full professional'],
+  ['Dutch', 'limited working'],
+  ['German', 'limited working'],
+];
+
+const certs = [
+  ['LinkedIn Marketing Strategy', 'var(--butter)', -4],
+  ['Graphic Design Essentials', 'var(--lilac)', 3],
+  ['SEO Essentials with Semrush', 'var(--tomato)', -2],
+  ['Getting Started with Semrush', 'var(--paper)', 4],
+  ['Inbound Sales', 'var(--butter)', -3],
+] as const;
 ---
 
 <BaseLayout
   title="About — Hélène David"
-  description="About Hélène David — International Business Management student (Marketing option) and CEO & co-founder of CalmCampus."
+  description="About Hélène David — International Business Management student (marketing option) and CEO & co-founder of CalmCampus."
 >
-  <PageHero label="About" lead="21 years old, based in Leuven — fascinated by how the world works and how people think.">
-    The Person<br />Behind the <em>Work</em>
+  <PageHero label="about" lead="21 years old, based in Leuven. Curious about how the world works and how people think.">
+    Hi, I’m <em>Hélène</em>
   </PageHero>
 
-  <!-- ABOUT -->
   <section>
-    <div class="container">
-      <div class="about-grid">
-        <div class="about-text">
-          <span class="section-label">Background</span>
-          <h2>Understanding how the world works — and how people think.</h2>
-          <p>I'm a 21-year-old student in an International Business Management (IBM) programme, with a Marketing option. My academic journey is driven by a fascination with understanding how the world functions and decoding people's thought processes.</p>
-          <p>Before that, I studied Political Science and Biomedical Sciences at ULB, after completing the European Baccalaureate at the European School of Luxembourg I. In summer 2026 I took part in the International Summer Program at Korea University.</p>
-        </div>
-        <div class="about-stats">
-          <div class="stat">
-            <span class="stat-num">4</span>
-            <span class="stat-label">Languages spoken</span>
-          </div>
-          <div class="stat">
-            <span class="stat-num">5</span>
-            <span class="stat-label">Certifications earned</span>
-          </div>
-        </div>
+    <div class="container about-grid">
+      <div class="about-text">
+        <p class="reveal">I’m a 21-year-old student in an International Business Management programme with a marketing option, driven by a fascination with understanding how the world functions and decoding people’s thought processes.</p>
+        <p class="reveal">Before that I studied Political Science and Biomedical Sciences at ULB, after finishing the European Baccalaureate at the European School of Luxembourg I. In summer 2026 I took part in the International Summer Program in Linear Algebra at Korea University.</p>
+        <p class="reveal">These days most of my work sits where brand, marketing and technology meet: a wellbeing startup, campaigns, and quite a lot of typography.</p>
+      </div>
+      <div class="note-card reveal">
+        <span class="hand">the short version</span>
+        <ul>
+          <li>CEO &amp; co-founder, CalmCampus</li>
+          <li>Head of social media, Insignia</li>
+          <li>{projects.length} projects so far</li>
+          <li>4 languages</li>
+        </ul>
       </div>
     </div>
   </section>
 
-  <!-- EDUCATION -->
-  <section style="background: var(--bg2);">
+  <section class="tint">
     <div class="container">
-      <span class="section-label">Education</span>
-      <h2>Academic Path</h2>
-      <div class="edu-grid">
-
-        <div class="edu-card">
-          <div class="edu-year">Sep 2024 — Jul 2027</div>
-          <div class="edu-content">
-            <h3>International Business Management (IBM)</h3>
-            <span class="edu-school">UC Leuven-Limburg · Marketing option</span>
+      <div class="section-head"><div><span class="eyebrow">education</span><h2>Where I’ve <em>studied</em></h2></div></div>
+      <div class="edu">
+        {education.map((e) => (
+          <div class:list={['paper', e.c, 'reveal']} style={`--r:${e.r}deg`}>
+            <div class="year">{e.year}</div>
+            <h3>{e.title}</h3>
+            <p class="where">{e.where}</p>
           </div>
-        </div>
-
-        <div class="edu-card">
-          <div class="edu-year">Jun — Jul 2026</div>
-          <div class="edu-content">
-            <h3>International Summer Program</h3>
-            <span class="edu-school">Korea University · Linear Algebra</span>
-          </div>
-        </div>
-
-        <div class="edu-card">
-          <div class="edu-year">Feb — Jun 2024</div>
-          <div class="edu-content">
-            <h3>Bachelor of Science, Biomedical Sciences</h3>
-            <span class="edu-school">Université Libre de Bruxelles (ULB)</span>
-          </div>
-        </div>
-
-        <div class="edu-card">
-          <div class="edu-year">Sep 2023 — Jan 2024</div>
-          <div class="edu-content">
-            <h3>Bachelor of Arts, Political Science</h3>
-            <span class="edu-school">Université Libre de Bruxelles (ULB)</span>
-          </div>
-        </div>
-
-        <div class="edu-card">
-          <div class="edu-year">Sep 2009 — Jul 2023</div>
-          <div class="edu-content">
-            <h3>European Baccalaureate</h3>
-            <span class="edu-school">European School of Luxembourg I</span>
-          </div>
-        </div>
-
+        ))}
       </div>
     </div>
   </section>
 
-  <!-- SKILLS -->
   <section>
     <div class="container">
-      <span class="section-label">Skills &amp; Languages</span>
-      <h2>Capabilities</h2>
-      <div class="skills-grid">
+      <div class="section-head"><div><span class="eyebrow">skills</span><h2>Things I’m <em>good</em> at</h2></div></div>
+      <div class="skills-wrap">
+        {skills.map(([label, bg, r]) => <span class="sticker reveal" style={`--c:${bg}; --r:${r}deg`}>{label}</span>)}
+      </div>
+    </div>
+  </section>
 
-        <div class="skills-block">
-          <h4>Core Skills</h4>
-          <ul class="skill-list">
-            <li><span class="skill-dot"></span>Product Innovation</li>
-            <li><span class="skill-dot"></span>Pitch &amp; Presentation</li>
-            <li><span class="skill-dot"></span>Linear Algebra</li>
-            <li><span class="skill-dot"></span>Business Strategy &amp; Go-to-Market</li>
-            <li><span class="skill-dot"></span>Stakeholder Engagement</li>
-            <li><span class="skill-dot"></span>Social Media</li>
-          </ul>
-        </div>
+  <section class="tint">
+    <div class="container">
+      <div class="section-head"><div><span class="eyebrow">languages</span><h2>I speak <em>four</em></h2></div></div>
+      <div class="langs">
+        {langs.map(([name, level]) => <div class="lang reveal"><b>{name}</b><span>{level}</span></div>)}
+      </div>
+    </div>
+  </section>
 
-        <div class="skills-block">
-          <h4>Languages</h4>
-          <div class="lang-list">
-            <div class="lang-item">
-              <div class="lang-name">
-                <span>French</span>
-                <span class="lang-level">Native</span>
-              </div>
-              <div class="lang-bar"><div class="lang-fill" style="width:100%"></div></div>
-            </div>
-            <div class="lang-item">
-              <div class="lang-name">
-                <span>English</span>
-                <span class="lang-level">Full Professional</span>
-              </div>
-              <div class="lang-bar"><div class="lang-fill" style="width:85%"></div></div>
-            </div>
-            <div class="lang-item">
-              <div class="lang-name">
-                <span>German</span>
-                <span class="lang-level">Limited Working</span>
-              </div>
-              <div class="lang-bar"><div class="lang-fill" style="width:40%"></div></div>
-            </div>
-            <div class="lang-item">
-              <div class="lang-name">
-                <span>Dutch</span>
-                <span class="lang-level">Limited Working</span>
-              </div>
-              <div class="lang-bar"><div class="lang-fill" style="width:40%"></div></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="skills-block">
-          <h4>Certifications</h4>
-          <ul class="cert-list">
-            <li><div class="cert-icon">✓</div><span>LinkedIn Marketing Strategy</span></li>
-            <li><div class="cert-icon">✓</div><span>Graphic Design Essentials</span></li>
-            <li><div class="cert-icon">✓</div><span>SEO Essentials with Semrush</span></li>
-            <li><div class="cert-icon">✓</div><span>Getting Started with Semrush</span></li>
-            <li><div class="cert-icon">✓</div><span>Inbound Sales</span></li>
-          </ul>
-        </div>
-
+  <section>
+    <div class="container">
+      <div class="section-head"><div><span class="eyebrow">certifications</span><h2>Collected <em>stamps</em></h2></div></div>
+      <div class="stamps">
+        {certs.map(([label, bg, r]) => <div class="stamp reveal" style={`--c:${bg}; --r:${r}deg`}><span>{label}</span></div>)}
       </div>
     </div>
   </section>
 
   <CtaStrip
-    title="Want to know more?"
-    text="Reach out — always happy to chat."
-    primary={{ href: "/contact.html", label: "Get in Touch" }}
-    secondary={{ href: "/work.html", label: "See My Work" }}
-  />
-
+    text="Always happy to chat about ideas, projects or collaborations."
+    primary={{ href: '/contact.html', label: 'Get in touch' }}
+    secondary={{ href: '/projects.html', label: 'See the projects' }}
+  >
+    Want to know <em>more</em>?
+  </CtaStrip>
 </BaseLayout>

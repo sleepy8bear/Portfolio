@@ -2,126 +2,62 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import CtaStrip from '../components/CtaStrip.astro';
+import { projects, categories } from '../data/projects';
+
+const pad = (n: number) => String(n).padStart(2, '0');
 ---
 
 <BaseLayout
   title="Projects — Hélène David"
-  description="Projects by Hélène David — CalmCampus (KU Leuven KICK Challenge finalist), an AI investment app hackathon, brand identity, and marketing campaigns."
+  description="Projects by Hélène David: CalmCampus (KU Leuven KICK Challenge finalist), an AI hackathon app, brand identities, typographic work and marketing campaigns."
 >
-  <PageHero label="Projects" lead="From a startup that reached the KU Leuven KICK finals to a 24-hour AI hackathon, brand identities and marketing campaigns.">
-    Things I've <em>Made</em>
+  <PageHero label="projects" lead="Product, marketing and design work from the last two years. Open any row for the full story.">
+    Things I’ve <em>made</em>
   </PageHero>
 
-  <!-- PROJECTS -->
-  <section style="background: var(--bg2);">
+  <section>
     <div class="container">
-      <div class="work-grid">
+      <div class="filters" role="group" aria-label="Filter projects">
+        <span class="hand">show me:</span>
+        <button class="chip" data-filter="all" aria-pressed="true">All</button>
+        {Object.entries(categories).map(([key, label]) => (
+          <button class="chip" data-filter={key} aria-pressed="false">{label}</button>
+        ))}
+        <span class="hand" style="margin-left:auto"><span id="project-count">{projects.length}</span> projects</span>
+      </div>
 
-        <div class="work-card wide featured-project">
-          <div class="work-card-meta">
-            <span class="work-card-role">Startup · KICK Challenge Finalist</span>
-            <span class="work-card-date">Apr 2026 — Present</span>
-          </div>
-          <h3>CalmCampus</h3>
-          <p>A privacy-first mobile app that helps universities detect early signs of student stress and burnout before they escalate. Developed for the KU Leuven KICK Challenge 2026, where the project reached the finals with a preventive approach to student wellbeing.</p>
-          <p>The app builds a personal baseline from behavioural signals already on a student's smartphone — typing patterns, app usage, screen-on time and sleep rhythms — and on-device AI flags meaningful changes that may indicate elevated stress. All raw data stays on the device, so CalmCampus is designed to be GDPR-native and privacy-preserving.</p>
-          <p>When warning signs appear, it offers evidence-based micro-interventions such as breathing exercises, mindfulness prompts, break reminders and peer-connection nudges, with referrals to campus counselling when needed. Through a university licensing model, students use the app for free while institutions receive anonymised wellbeing insights.</p>
-          <div class="work-card-tags">
-            <span>Pitch &amp; Presentation</span>
-            <span>Entrepreneurship</span>
-            <span>On-device AI</span>
-            <span>Federated Learning</span>
-            <span>GDPR</span>
-          </div>
-        </div>
-
-        <div class="work-card">
-          <div class="work-card-meta">
-            <span class="work-card-role">Hackathon</span>
-            <span class="work-card-date">Mar 2026</span>
-          </div>
-          <h3>Next Level Challenge</h3>
-          <p>A 24-hour hackathon organised by NEXT Leuven, working on a real-world case by InvestSuite. We built an AI-powered investment app using the Claude API that adapts its interface and recommendations to each individual user.</p>
-          <p>Scored 80/100 overall (40/50 technical, 40/50 business), with jury feedback highlighting great design and strong product thinking.</p>
-          <div class="work-card-tags">
-            <span>Product Design</span>
-            <span>Pitching Ideas</span>
-            <span>Claude API</span>
-          </div>
-        </div>
-
-        <div class="work-card">
-          <div class="work-card-meta">
-            <span class="work-card-role">Brand Identity</span>
-            <span class="work-card-date">Nov 2025 — Jan 2026</span>
-          </div>
-          <h3>Food &amp; Mood</h3>
-          <p>A mood-driven restaurant concept designed to create a more personalised dining experience, developed with a teammate for a Brand Identity and Graphic Design course.</p>
-          <p>We took the brand from concept to execution: brand story, visual identity, logo, colour palette, typography, illustrations, UI concept, mockups, and print and digital advertising assets — translating emotion and atmosphere into one cohesive brand experience.</p>
-          <div class="work-card-tags">
-            <span>Brand Identity</span>
-            <span>Product Design</span>
-            <span>Typography</span>
-            <span>Graphic Design</span>
-          </div>
-        </div>
-
-        <div class="work-card">
-          <div class="work-card-meta">
-            <span class="work-card-role">Graphic Design</span>
-            <span class="work-card-date">Sep 2025</span>
-          </div>
-          <h3>Nike Poster Campaign</h3>
-          <p>Three posters for a Nike campaign built around diversity in sport, designed in Photoshop for a Brand Identity and Graphic Design class. We researched Nike's existing advertising and built a mood board before designing swimming, football and tennis posters.</p>
-          <p>Each athlete is cut out and placed on a sport-specific background, both turned black and white, with a single accent colour per poster. Every poster carries "Just do it.", set in Futura PT, and each composition takes its own approach. Made entirely without generative AI.</p>
-          <div class="work-card-tags">
-            <span>Adobe Photoshop</span>
-            <span>Campaign Design</span>
-            <span>Composition</span>
-          </div>
-        </div>
-
-        <div class="work-card">
-          <div class="work-card-meta">
-            <span class="work-card-role">Marketing Campaign</span>
-            <span class="work-card-date">May 2025</span>
-          </div>
-          <h3>Immoscoop Communication Campaign</h3>
-          <p>A one-week Boosterweek project in which five of us set up a fictional agency, House of Vision, and built a full communication strategy for Belgian real estate platform Immoscoop — positioning it as a "caretaker" in the home search.</p>
-          <p>We targeted "The Busy Bees" (Belgian families with young children), set three SMART objectives using the DAGMAR model, compared Immoscoop with Immoweb, Zimmo and Immovlan using Semrush data, and built a benefit ladder around its map-drawing tool. The message: "Where the growth of your family begins." The media plan combined social media, commuter-route billboards and radio.</p>
-          <div class="work-card-tags">
-            <span>Marketing Strategy</span>
-            <span>Semrush</span>
-            <span>Campaign Planning</span>
-            <span>Teamwork</span>
-          </div>
-        </div>
-
-        <div class="work-card wide">
-          <div class="work-card-meta">
-            <span class="work-card-role">Market Analysis</span>
-            <span class="work-card-date">Dec 2024</span>
-          </div>
-          <h3>Engels Logistics — Marketing Environment Analysis</h3>
-          <p>A Boosterweek project in a cross-class team of four, analysing the marketing environment of Engels Logistics, a European supplier of sustainable logistics and waste-management solutions. We started with an interview with the company.</p>
-          <p>The analysis covered the micro, meso (Porter's Five Forces and a 4P comparison with Sulo and Transoplast) and macro environment, CSR and the SDGs the company pursues, and ended in a SWOT. From it we proposed a sustainability-focused rebrand ("Driving Sustainability") and an educational blog with a carbon footprint calculator.</p>
-          <div class="work-card-tags">
-            <span>Market Analysis</span>
-            <span>Porter's Five Forces</span>
-            <span>SWOT</span>
-            <span>Sustainability</span>
-          </div>
-        </div>
-
+      <div class="project-list">
+        {projects.map((p, i) => (
+          <details class="project reveal" id={p.id} data-cat={p.cat}>
+            <summary>
+              <span class="no">{pad(i + 1)}</span>
+              <div>
+                <h3 class="title">{p.title}</h3>
+                <p class="sum">{p.summary}</p>
+              </div>
+              <span class="side">
+                <span class="when">{p.date}</span>
+                <span class="toggle" aria-hidden="true">+</span>
+              </span>
+            </summary>
+            <div class="detail">
+              <div>
+                <span class="kind">{p.kind} · {p.date}</span>
+                {p.body.map((para) => <p>{para}</p>)}
+                <div class="tags">{p.tags.map((t) => <span>{t}</span>)}</div>
+              </div>
+            </div>
+          </details>
+        ))}
       </div>
     </div>
   </section>
 
   <CtaStrip
-    title="Want to talk about any of these?"
-    text="Happy to share more about the thinking behind them."
-    primary={{ href: "/contact.html", label: "Get in Touch" }}
-    secondary={{ href: "/work.html", label: "See My Experience" }}
-  />
-
+    text="Happy to share more about the thinking behind any of these."
+    primary={{ href: '/contact.html', label: 'Get in touch' }}
+    secondary={{ href: '/work.html', label: 'See my experience' }}
+  >
+    Like what <em>you see</em>?
+  </CtaStrip>
 </BaseLayout>
