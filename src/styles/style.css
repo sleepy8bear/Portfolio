@@ -103,7 +103,6 @@ p { max-width: 62ch; }
   justify-content: space-between;
   padding: .8rem var(--gutter);
   background: var(--paper);
-  border-bottom: 2px solid var(--ink);
 }
 
 .logo-badge {
