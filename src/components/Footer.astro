@@ -1,6 +1,7 @@
 ---
 const year = new Date().getFullYear();
 const links = [
+  { href: '/', label: 'Home' },
   { href: '/work.html', label: 'Work' },
   { href: '/projects.html', label: 'Projects' },
   { href: '/about.html', label: 'About' },
@@ -9,20 +10,30 @@ const links = [
 ---
 
 <footer>
-  <div class="container">
-    <div class="footer-top">
-      <p class="footer-word">Hélène<br /><em>David</em></p>
+  <div class="container footer-main">
+    <div class="footer-brand">
       <a href="/" class="logo-badge" aria-label="Hélène David — home">
         <img src="/logo.png" alt="Hélène David" width="400" height="400" loading="lazy" />
       </a>
+      <p class="hand">thanks for stopping by ✺</p>
+      <p class="footer-blurb">International Business Management student, CEO &amp; co-founder of CalmCampus. Based in Leuven.</p>
     </div>
-    <div class="footer-bottom">
-      <nav class="footer-links" aria-label="Footer">
-        {links.map((l) => <a href={l.href}>{l.label}</a>)}
-        <a href="https://www.linkedin.com/in/helenedavid11" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="mailto:helene.david@proton.me">Email</a>
-      </nav>
-      <p>© {year} Hélène David · made in Leuven</p>
+
+    <nav class="footer-nav" aria-label="Footer">
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+
+    <div class="footer-contact">
+      <span class="hand">say hello</span>
+      <a href="mailto:helene.david@proton.me" class="footer-mail">helene.david@proton.me</a>
+      <a href="https://www.linkedin.com/in/helenedavid11" target="_blank" rel="noopener" class="link-arrow">LinkedIn ↗</a>
     </div>
+  </div>
+
+  <p class="footer-word" aria-hidden="true"><span>Hélène</span> <em>David</em></p>
+
+  <div class="container footer-bottom">
+    <p>© {year} Hélène David</p>
+    <p>made in Leuven, with a lot of paper and ink</p>
   </div>
 </footer>
