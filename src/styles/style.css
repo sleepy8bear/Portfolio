@@ -788,3 +788,43 @@ body.letter-open { overflow: hidden; }
 .viewer.single .viewer-stage { padding-inline: clamp(.75rem, 2vw, 1.5rem); padding-bottom: clamp(.75rem, 2vw, 1.5rem); }
 
 .env-label:has(.env-clip) { padding-right: 2.6rem; }
+
+/* ── Responsive polish: comfortable tap targets + short (landscape) screens ── */
+@media (max-width: 900px) {
+  .chip { min-height: 44px; padding-block: .55rem; }
+  .footer-nav a { padding-block: .45rem; }
+  .footer-contact a { min-height: 44px; display: inline-flex; align-items: center; }
+  .sheet-nav button { min-height: 44px; }
+  .back-link { min-height: 44px; align-items: center; }
+}
+
+/* Dialogs follow the *visible* viewport (dvh) so phone browser bars don't hide the controls */
+.letter { max-height: min(90vh, 920px); max-height: min(90dvh, 920px); }
+.sheet { max-height: min(90vh, 920px); max-height: min(90dvh, 920px); }
+.viewer, .viewer-frame { max-height: calc(100vh - 1.5rem); max-height: calc(100dvh - 1.5rem); }
+.viewer-img { max-height: calc(100vh - 14rem); max-height: calc(100dvh - 14rem); }
+
+@media (max-height: 520px) {
+  .letter, .sheet { max-height: 96vh; max-height: 96dvh; }
+  .sheet-body { padding-top: 1.5rem; padding-bottom: 1rem; }
+  .sheet-body .letter-title { font-size: clamp(1.8rem, 5vw, 2.6rem); margin-bottom: 1rem; }
+  .sheet-nav { padding-block: .4rem; }
+  .letter-close { top: 8px; right: 8px; width: 40px; height: 40px; }
+  .sheet-body { padding-right: 3.5rem; }
+  .viewer, .viewer-frame { max-height: 98vh; max-height: 98dvh; }
+  .viewer { margin-block: auto; }
+  .viewer-head { padding-block: .4rem; }
+  .viewer-head h3 { font-size: 1.1rem; }
+  .viewer-close { width: 36px; height: 36px; }
+  .viewer-stage { padding-block: .5rem; }
+  .viewer-foot { padding-block: .4rem; }
+  .viewer-img { max-height: calc(100vh - 9.5rem); max-height: calc(100dvh - 9.5rem); }
+  .viewer-arrow { top: 50%; bottom: auto; margin-top: -23px; }
+  .hero { padding-top: 5.5rem; }
+}
+
+/* Wide screens: keep the header aligned with the content column */
+#nav { padding-inline: max(var(--gutter), calc((100% - var(--max)) / 2)); }
+@media (max-width: 1100px) {
+  .nav-links a.nav-cta { min-height: 44px; display: inline-flex; align-items: center; }
+}
