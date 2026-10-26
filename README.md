@@ -65,15 +65,15 @@ To change the header or footer, edit the component once — every page picks it 
 
 **Add a project:** add an entry to `src/data/projects.ts`. It shows up on the Projects page automatically (and can be featured on the home page).
 
-**Colours:** all design tokens live in `:root` in `src/styles/style.css`:
+**Colours:** pastel palette based on Pantone Vanilla Custard, Flamingo Plume and Brandy Brown. All tokens live in `:root` in `src/styles/style.css`:
 
 ```css
 :root {
-  --paper:  #f4ede1;   /* page background */
-  --ink:    #1c1814;   /* text + outlines */
-  --lilac:  #c3a8ff;
-  --tomato: #ff5b3a;
-  --butter: #ffd95a;
+  --paper:    #fcf4e6;   /* page background */
+  --ink:      #5f2621;   /* Brandy Brown: text + outlines */
+  --custard:  #f3ddb2;   /* Vanilla Custard */
+  --flamingo: #e58d98;   /* Flamingo Plume */
+  --blush:    #f3bcc4;   /* light tint of flamingo */
 }
 ```
 

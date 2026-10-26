@@ -28,7 +28,7 @@ const ticker = ['Brand identity', 'Marketing strategy', 'Typography', 'Pitching'
           <span class="squiggle">CalmCampus</span>, a privacy-first wellbeing app that reached the KU Leuven KICK finals.
         </p>
         <div class="hero-actions">
-          <a href="/projects.html" class="btn btn--tomato">See the projects ↘</a>
+          <a href="/projects.html" class="btn btn--flamingo">See the projects ↘</a>
           <a href="/about.html" class="btn">About me</a>
         </div>
       </div>
@@ -49,7 +49,7 @@ const ticker = ['Brand identity', 'Marketing strategy', 'Typography', 'Pitching'
       </div>
 
       <div class="featured">
-        <a href={`/projects.html#${main.id}`} class="paper paper--butter reveal" style="--r:-1deg">
+        <a href={`/projects.html#${main.id}`} class="paper paper--custard reveal" style="--r:-1deg">
           <div class="meta"><span>{main.kind}</span><span>{main.date}</span></div>
           <h3>{main.title}</h3>
           <p>{main.summary} Developed for the KU Leuven KICK Challenge 2026, where it reached the finals.</p>
@@ -59,7 +59,7 @@ const ticker = ['Brand identity', 'Marketing strategy', 'Typography', 'Pitching'
 
         <div class="paper-stack">
           {side.map((p, i) => (
-            <a href={`/projects.html#${p.id}`} class:list={['paper', i === 0 ? 'paper--lilac' : 'paper--tomato', 'reveal']} style={`--r:${i === 0 ? 1.5 : -1.5}deg; --tape:${i === 0 ? 4 : -5}deg`}>
+            <a href={`/projects.html#${p.id}`} class:list={['paper', i === 0 ? 'paper--blush' : 'paper--flamingo', 'reveal']} style={`--r:${i === 0 ? 1.5 : -1.5}deg; --tape:${i === 0 ? 4 : -5}deg`}>
               <div class="meta"><span>{p.kind}</span><span>{p.date}</span></div>
               <h3 style="font-size: clamp(1.6rem, 3vw, 2.4rem)">{p.title}</h3>
               <p>{p.summary}</p>
