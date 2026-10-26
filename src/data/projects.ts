@@ -11,6 +11,18 @@ export interface Project {
   body: string[];
   tags: string[];
   featured?: boolean;
+  /** Files attached on LinkedIn, saved to /public/projects/<id>/<slug>/NN.jpg (+ cover.jpg) */
+  files?: Enclosure[];
+  link?: { label: string; href: string; note: string };
+}
+
+export interface Enclosure {
+  slug: string;
+  title: string;
+  kind: 'deck' | 'image';
+  pages: number;
+  w: number;
+  h: number;
 }
 
 export const categories: Record<Category, string> = {
@@ -35,6 +47,10 @@ export const projects: Project[] = [
       'By combining passive sensing, on-device AI, federated learning and university integration, CalmCampus moves student mental health support from reactive to preventive.',
     ],
     tags: ['Pitch & Presentation', 'Entrepreneurship', 'On-device AI', 'Federated learning', 'GDPR'],
+    files: [
+      { slug: 'pitch-deck', title: 'Pitch deck', kind: 'deck', pages: 8, w: 1280, h: 720 },
+      { slug: 'selection-email', title: 'KICK selection email', kind: 'image', pages: 1, w: 1280, h: 778 },
+    ],
     featured: true,
   },
   {
@@ -50,6 +66,9 @@ export const projects: Project[] = [
       'After presenting the options and refining them with our lecturer’s feedback, we picked one strategy and developed it into first ideas for the full marketing mix (product, price, place, promotion) and the KPIs to measure it. We finished with an original video.',
     ],
     tags: ['Marketing strategy', 'Buyer personas', 'Positioning', 'KPIs'],
+    files: [
+      { slug: 'strategy-deck', title: 'Strategy & tactics deck', kind: 'deck', pages: 23, w: 1280, h: 720 },
+    ],
   },
   {
     id: 'study-far-far-away',
@@ -64,6 +83,9 @@ export const projects: Project[] = [
       'The campaign tells each student’s journey as a fairytale across the customer journey, from September to the May info session: awareness (“She dreamed to study beyond borders…”) with trend-based TikToks and Reels, consideration (“…And she did”) with day-in-the-life videos, carousels and a testimonial, and conversion (“…And so can you!”) with a campus tour and info-session sign-ups. We used generative AI responsibly for brainstorming, wording and website support, and I oversaw how the group applied it.',
     ],
     tags: ['Digital marketing', 'SEO', 'Content strategy', 'Semrush', 'Social media'],
+    files: [
+      { slug: 'campaign-deck', title: 'Campaign deck', kind: 'deck', pages: 48, w: 1280, h: 720 },
+    ],
   },
   {
     id: 'ray-jules-plan',
@@ -78,6 +100,9 @@ export const projects: Project[] = [
       'Externally we analysed distribution at macro, meso and micro level, compared Ray & Jules with a direct competitor (Wide Awake) and an indirect one (Nespresso), and used TrendWatching to pick one trend as an opportunity and one as a threat. The SWOT showed strong differentiation through roasting technology and sustainability, but low awareness, premium pricing and heavy reliance on direct-to-consumer sales. Our conclusion: expand beyond the niche, become more visible in everyday life and be present where people actually buy coffee.',
     ],
     tags: ['Marketing strategy', 'SWOT', 'Brand equity', 'Competitor analysis'],
+    files: [
+      { slug: 'strategic-plan', title: 'Strategic marketing plan', kind: 'deck', pages: 28, w: 1280, h: 720 },
+    ],
   },
   {
     id: 'next-level-challenge',
@@ -92,6 +117,11 @@ export const projects: Project[] = [
       'Scored 80/100 overall (40/50 technical, 40/50 business), with jury feedback highlighting great design and strong product thinking.',
     ],
     tags: ['Product design', 'Pitching ideas', 'Claude API'],
+    files: [
+      { slug: 'hackathon', title: 'Hackathon', kind: 'image', pages: 1, w: 1280, h: 960 },
+      { slug: 'feedback', title: 'Jury feedback', kind: 'image', pages: 1, w: 1280, h: 745 },
+    ],
+    link: { label: 'GitHub repository', href: 'https://github.com/hack-florian/Next-Level-Challenge', note: 'Next-Level-Challenge' },
     featured: true,
   },
   {
@@ -107,6 +137,10 @@ export const projects: Project[] = [
       'The aim was to translate emotion and atmosphere into one cohesive, engaging brand experience.',
     ],
     tags: ['Brand identity', 'Typography', 'Product design', 'Illustration'],
+    files: [
+      { slug: 'presentation', title: 'Presentation', kind: 'deck', pages: 17, w: 1280, h: 720 },
+      { slug: 'brand-book', title: 'Brand book', kind: 'deck', pages: 17, w: 1280, h: 904 },
+    ],
     featured: true,
   },
   {
@@ -122,6 +156,9 @@ export const projects: Project[] = [
       'Starting from an existing ad (bright blue and green, cartoon cows, a pun headline), I rebuilt it in Photoshop as a high-end ad: a soft, muted pastel landscape, a matte taupe pint with a gold lid and lettering (Madagascar Vanilla), an elegant arched serif wordmark with “much more than ice cream” underneath, and a new tagline in refined red script: “For those who know quality when they taste it.” The result shifts the brand’s story from humour to prestige and expertise, presented as a before-and-after mock-up with a short explanation of the archetype shift.',
     ],
     tags: ['Adobe Photoshop', 'Graphic design', 'Brand archetypes'],
+    files: [
+      { slug: 'mockup', title: 'Before & after mock-up', kind: 'image', pages: 1, w: 1280, h: 1036 },
+    ],
     featured: true,
   },
   {
@@ -137,6 +174,9 @@ export const projects: Project[] = [
       'Colour psychology guided each scene (deep purple and gold for the Queen’s vanity, red on dark green for danger, warm cream and brown for comfort, red on cold blue for the poison, soft yellow and pink for the happy ending) and the typefaces move with the mood from elegant serifs to rough hand-cut letters and gothic forms. I also made a short animated GIF on the Photoshop timeline. Made entirely without generative AI.',
     ],
     tags: ['Typography', 'Adobe Photoshop', 'Colour psychology', 'Graphic design'],
+    files: [
+      { slug: 'carousel', title: 'Carousel slides', kind: 'deck', pages: 5, w: 1024, h: 1280 },
+    ],
     featured: true,
   },
   {
@@ -152,6 +192,9 @@ export const projects: Project[] = [
       'Each composition takes its own approach. The swimming poster is quiet and focused, the football poster uses the pitch markings as its layout grid, and the tennis poster spreads the slogan around the player to follow her movement. Worked entirely without generative AI.',
     ],
     tags: ['Adobe Photoshop', 'Composition', 'Campaign design', 'Moodboards'],
+    files: [
+      { slug: 'posters', title: 'The three posters', kind: 'deck', pages: 3, w: 905, h: 1280 },
+    ],
   },
   {
     id: 'immoscoop',
@@ -166,6 +209,9 @@ export const projects: Project[] = [
       'We targeted “The Busy Bees” (Belgian families with young children), set three SMART objectives using the DAGMAR model, and compared Immoscoop with Immoweb, Zimmo and Immovlan using Semrush data and a perceptual map. A benefit ladder built around the map-drawing tool led to the message “Where the growth of your family begins.” Each visual shows a family and a custom search zone drawn around the places that matter to them, and the media plan combined social posts, commuter-route billboards and radio.',
     ],
     tags: ['Marketing strategy', 'Campaign planning', 'Semrush', 'Teamwork'],
+    files: [
+      { slug: 'campaign-deck', title: 'Campaign deck', kind: 'deck', pages: 43, w: 1280, h: 720 },
+    ],
   },
   {
     id: 'engels-logistics',

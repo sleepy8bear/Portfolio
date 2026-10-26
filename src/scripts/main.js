@@ -195,6 +195,7 @@ if (fine && !reduce) {
     let text = '';
     if (hot) {
       if (hot.matches('.envelope')) text = 'open';
+      else if (hot.matches('[data-viewer]')) text = 'view';
       else if (hot.matches('a.paper')) text = 'view';
       else if (hot.matches('.sticker, .stamp')) text = 'drag';
     }
@@ -271,6 +272,70 @@ if (fine && !reduce) {
   });
 }
 
+/* ── File viewer: flip through the pages of an enclosed deck ── */
+const viewer = document.getElementById('viewer');
+const fileViewer = (() => {
+  if (!viewer) return null;
+  const img = viewer.querySelector('.viewer-img');
+  const title = viewer.querySelector('#viewer-title');
+  const range = viewer.querySelector('.viewer-range');
+  const count = viewer.querySelector('.viewer-count');
+  const prev = viewer.querySelector('[data-vprev]');
+  const next = viewer.querySelector('[data-vnext]');
+  let path = '';
+  let total = 1;
+  let page = 1;
+  const src = (n) => `${path}${String(n).padStart(2, '0')}.jpg`;
+
+  function show(n) {
+    page = clamp(n, 1, total);
+    img.classList.add('loading');
+    const probe = new Image();
+    probe.onload = () => { if (src(page) === probe.getAttribute('src')) { img.src = probe.src; img.classList.remove('loading'); } };
+    probe.setAttribute('src', src(page));
+    img.alt = `${title.textContent}, page ${page} of ${total}`;
+    range.value = String(page);
+    count.textContent = `${page} / ${total}`;
+    prev.disabled = page === 1;
+    next.disabled = page === total;
+    [page + 1, page - 1].forEach((k) => { if (k >= 1 && k <= total) new Image().src = src(k); }); // warm the neighbours
+  }
+
+  function open(btn) {
+    path = btn.dataset.path;
+    total = Number(btn.dataset.pages) || 1;
+    title.textContent = btn.dataset.title;
+    range.max = String(total);
+    viewer.classList.toggle('single', total === 1);
+    img.removeAttribute('src');
+    show(1);
+    viewer.showModal();
+  }
+
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest?.('[data-viewer]');
+    if (btn) open(btn);
+  });
+  viewer.addEventListener('click', (e) => { if (e.target === viewer) viewer.close(); });
+  viewer.querySelector('[data-vclose]').addEventListener('click', () => viewer.close());
+  prev.addEventListener('click', () => show(page - 1));
+  next.addEventListener('click', () => show(page + 1));
+  range.addEventListener('input', () => show(Number(range.value)));
+
+  // swipe on touch screens
+  const stage = viewer.querySelector('.viewer-stage');
+  let startX = null;
+  stage.addEventListener('pointerdown', (e) => { if (e.pointerType === 'touch') startX = e.clientX; });
+  stage.addEventListener('pointerup', (e) => {
+    if (startX === null) return;
+    const dx = e.clientX - startX;
+    startX = null;
+    if (Math.abs(dx) > 50) show(page + (dx < 0 ? 1 : -1));
+  });
+
+  return { isOpen: () => viewer.open, step: (d) => show(page + d) };
+})();
+
 /* ── Projects: sealed envelopes that open into a letter ── */
 const envelopes = [...document.querySelectorAll('.envelope')];
 const letter = document.getElementById('letter');
@@ -341,6 +406,11 @@ if (envelopes.length && letter) {
   letter.querySelector('[data-prev]').addEventListener('click', () => step(-1));
   letter.querySelector('[data-next]').addEventListener('click', () => step(1));
   document.addEventListener('keydown', (e) => {
+    if (fileViewer?.isOpen()) {                      // a file is open on top of the letter
+      if (e.key === 'ArrowLeft') fileViewer.step(-1);
+      if (e.key === 'ArrowRight') fileViewer.step(1);
+      return;
+    }
     if (!letter.open) return;
     if (e.key === 'ArrowLeft') step(-1);
     if (e.key === 'ArrowRight') step(1);

@@ -8,6 +8,8 @@ import { projects, categories } from '../data/projects';
 
 const pad = (n: number) => String(n).padStart(2, '0');
 const tilt = [-1.6, 1.1, -0.6, 1.8, -1.1, 0.7];
+const enclTilt = [-2.2, 1.6, -1, 2.4];
+const fileCount = (p: (typeof projects)[number]) => (p.files?.length ?? 0) + (p.link ? 1 : 0);
 ---
 
 <BaseLayout
@@ -56,8 +58,15 @@ const tilt = [-1.6, 1.1, -0.6, 1.8, -1.1, 0.7];
             <span class="env-stamp" aria-hidden="true">{categories[p.cat]}</span>
             <span class="env-seal" aria-hidden="true">{pad(i + 1)}</span>
             <span class="env-label">
+              {fileCount(p) > 0 && (
+                <span class="env-clip" aria-hidden="true">
+                  <svg viewBox="0 0 24 56" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M17 20 V40 a7 7 0 0 1 -14 0 V12 a5.5 5.5 0 0 1 11 0 V38 a3.5 3.5 0 0 1 -7 0 V18" /></svg>
+                  <b>{fileCount(p)}</b>
+                </span>
+              )}
               <span class="env-title">{p.title}</span>
               <span class="env-teaser">{p.teaser}</span>
+              {fileCount(p) > 0 && <span class="sr-only">{fileCount(p)} attached {fileCount(p) === 1 ? 'file' : 'files'}</span>}
             </span>
           </button>
         ))}
@@ -71,6 +80,38 @@ const tilt = [-1.6, 1.1, -0.6, 1.8, -1.1, 0.7];
       <h3 class="letter-title" id="letter-title">{p.title}</h3>
       {p.body.map((para) => <p>{para}</p>)}
       <div class="tags">{p.tags.map((t) => <span>{t}</span>)}</div>
+      {fileCount(p) > 0 && (
+        <div class="enclosed">
+          <span class="hand">enclosed with this letter:</span>
+          <div class="enclosures">
+            {(p.files ?? []).map((f, i) => (
+              <button
+                type="button"
+                class:list={['enclosure', { 'is-stack': f.pages > 1 }]}
+                data-viewer
+                data-path={`/projects/${p.id}/${f.slug}/`}
+                data-pages={f.pages}
+                data-title={f.title}
+                data-ratio={(f.w / f.h).toFixed(3)}
+                style={`--r:${enclTilt[i % enclTilt.length]}deg; --ratio:${(f.w / f.h).toFixed(3)}`}
+              >
+                <span class="enc-clip" aria-hidden="true"></span>
+                <span class="enc-paper"><img src={`/projects/${p.id}/${f.slug}/cover.jpg`} alt="" loading="lazy" width="280" height={Math.round(280 / (f.w / f.h))} /></span>
+                <span class="enc-cap">{f.title}</span>
+                <span class="enc-meta">{f.pages > 1 ? `${f.pages} pages` : 'image'} · open</span>
+              </button>
+            ))}
+            {p.link && (
+              <a class="enclosure enclosure--link" href={p.link.href} target="_blank" rel="noopener" style={`--r:${enclTilt[(p.files?.length ?? 0) % enclTilt.length]}deg`}>
+                <span class="enc-clip" aria-hidden="true"></span>
+                <span class="enc-postcard"><b>↗</b><i>{p.link.note}</i></span>
+                <span class="enc-cap">{p.link.label}</span>
+                <span class="enc-meta">github.com · opens a new tab</span>
+              </a>
+            )}
+          </div>
+        </div>
+      )}
       <p class="signature">with love, Hélène ✺</p>
     </template>
   ))}
@@ -84,6 +125,24 @@ const tilt = [-1.6, 1.1, -0.6, 1.8, -1.1, 0.7];
         <span class="sheet-count" aria-live="polite"></span>
         <button type="button" data-next>next →</button>
       </nav>
+    </div>
+  </dialog>
+
+  <dialog id="viewer" class="viewer" aria-labelledby="viewer-title">
+    <div class="viewer-frame">
+      <header class="viewer-head">
+        <h3 id="viewer-title"></h3>
+        <button type="button" class="viewer-close" data-vclose aria-label="Close file">×</button>
+      </header>
+      <div class="viewer-stage">
+        <button type="button" class="viewer-arrow viewer-prev" data-vprev aria-label="Previous page">←</button>
+        <img class="viewer-img" alt="" />
+        <button type="button" class="viewer-arrow viewer-next" data-vnext aria-label="Next page">→</button>
+      </div>
+      <footer class="viewer-foot">
+        <input type="range" class="viewer-range" min="1" max="1" value="1" aria-label="Page" />
+        <span class="viewer-count" aria-live="polite"></span>
+      </footer>
     </div>
   </dialog>
 

@@ -64,6 +64,8 @@ To change the header or footer, edit the component once — every page picks it 
 
 ## Customisation
 
+**Attached files:** each project can enclose files (decks, images, a link). Put the page images in `public/projects/<project-id>/<slug>/01.jpg, 02.jpg, …` plus a `cover.jpg`, then list them under `files:` in `src/data/projects.ts`. They show up as taped tiles in the letter and open in a page viewer.
+
 **Add a project:** add an entry to `src/data/projects.ts` (including a one-line `teaser` for the envelope). It becomes a new envelope and letter on the Projects page automatically, and can be featured on the home page.
 
 **Colours:** pastel palette based on Pantone Vanilla Custard, Flamingo Plume and Brandy Brown. All tokens live in `:root` in `src/styles/style.css`:
