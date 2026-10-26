@@ -44,6 +44,9 @@ const fileCount = (p: (typeof projects)[number]) => (p.files?.length ?? 0) + (p.
             <span class="env-letter" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
             <span class="env-front" aria-hidden="true"></span>
             <svg class="env-folds" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+              <polygon class="fold-side" points="0,0 50,56 0,100" />
+              <polygon class="fold-side" points="100,0 50,56 100,100" />
+              <polygon class="fold-bottom" points="0,100 50,52 100,100" />
               <path d="M0 100 L50 52 L100 100" />
               <path d="M0 0 L50 56" /><path d="M100 0 L50 56" />
             </svg>
@@ -52,6 +55,14 @@ const fileCount = (p: (typeof projects)[number]) => (p.files?.length ?? 0) + (p.
             </span>
             <span class="env-date" aria-hidden="true">{p.date}</span>
             <span class="env-stamp" aria-hidden="true">{categories[p.cat]}</span>
+            <svg class="env-postmark" viewBox="0 0 150 80" aria-hidden="true">
+              <defs><path id={`pm-${p.id}`} d="M108 40 m-27 0 a27 27 0 1 1 54 0 a27 27 0 1 1 -54 0" /></defs>
+              <circle cx="108" cy="40" r="35" fill="none" stroke="currentColor" stroke-width="2" />
+              <circle cx="108" cy="40" r="21" fill="none" stroke="currentColor" stroke-width="1.5" />
+              <text font-family="Instrument Sans, sans-serif" font-weight="700" font-size="8.4" letter-spacing="1.8" fill="currentColor"><textPath href={`#pm-${p.id}`} startOffset="1">LEUVEN ✺ BELGIUM ✺</textPath></text>
+              <path d="M4 24 q9 -7 18 0 t18 0 t18 0 M4 40 q9 -7 18 0 t18 0 t18 0 M4 56 q9 -7 18 0 t18 0 t18 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+            <span class="env-air" aria-hidden="true"></span>
             <span class="env-seal" aria-hidden="true">{pad(i + 1)}</span>
             <span class="env-label">
               {fileCount(p) > 0 && (
