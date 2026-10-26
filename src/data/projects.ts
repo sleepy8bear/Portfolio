@@ -226,5 +226,8 @@ export const projects: Project[] = [
       'We also looked at CSR: the SDGs the company pursues (9, 12, 13, 17), its circular-economy efforts and some questionable practices in the sector. A SWOT summarised the findings, and from it we proposed two sustainable marketing ideas: a sustainability-focused rebrand (“Driving Sustainability”) and an educational blog with a carbon footprint calculator.',
     ],
     tags: ['Market analysis', 'Porter’s Five Forces', 'SWOT', 'Sustainability'],
+    files: [
+      { slug: 'analysis', title: 'Marketing environment analysis', kind: 'deck', pages: 15, w: 1200, h: 675 },
+    ],
   },
 ];
