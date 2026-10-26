@@ -12,7 +12,7 @@ Personal portfolio website for Hélène David, International Business Management
 |------|-------------|
 | `/` | Landing page — hero collage, marquee, selected work |
 | `/work.html` | Full experience timeline |
-| `/projects.html` | All projects as an expandable index with category filters |
+| `/projects.html` | Projects as sealed envelopes: click one to open the full letter (category filters, previous/next, deep links like `#calmcampus`) |
 | `/about.html` | Bio, education, skills, languages & certifications |
 | `/contact.html` | Email and LinkedIn |
 
@@ -20,7 +20,7 @@ Personal portfolio website for Hélène David, International Business Management
 
 - **[Astro](https://astro.build)** — static site generator with components (`Header`, `Footer`, `PageHero`, `CtaStrip`, `Marquee`, `HeroArt`) and one shared layout
 - **CSS3** — custom properties, Grid, Flexbox; hand-drawn look (wobbly borders, hard shadows, SVG squiggles, paper grain) with no CSS framework
-- **Vanilla JS** — no animation libraries: headline word reveals, parallax shapes, scroll-reactive ticker, trailing cursor, draggable stickers, animated accordion, project filter. Motion is switched off for `prefers-reduced-motion`; pointer effects run with a mouse only.
+- **Vanilla JS** — no animation libraries: headline word reveals, parallax shapes, scroll-reactive ticker, trailing cursor, draggable stickers, envelope-and-letter project viewer, project filter. Motion is switched off for `prefers-reduced-motion`; pointer effects run with a mouse only.
 - **Fonts** — [Fraunces](https://fonts.google.com/specimen/Fraunces) (display), [Instrument Sans](https://fonts.google.com/specimen/Instrument+Sans) (body), [Reenie Beanie](https://fonts.google.com/specimen/Reenie+Beanie) (handwriting) via Google Fonts
 - **Hosting** — GitHub Pages (deployed by GitHub Actions) + Cloudflare DNS
 
@@ -64,7 +64,7 @@ To change the header or footer, edit the component once — every page picks it 
 
 ## Customisation
 
-**Add a project:** add an entry to `src/data/projects.ts`. It shows up on the Projects page automatically (and can be featured on the home page).
+**Add a project:** add an entry to `src/data/projects.ts` (including a one-line `teaser` for the envelope). It becomes a new envelope and letter on the Projects page automatically, and can be featured on the home page.
 
 **Colours:** pastel palette based on Pantone Vanilla Custard, Flamingo Plume and Brandy Brown. All tokens live in `:root` in `src/styles/style.css`:
 

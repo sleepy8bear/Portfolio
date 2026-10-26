@@ -325,39 +325,6 @@ a.paper:hover { rotate: 0deg; --hx: -3px; --hy: -3px; box-shadow: 12px 12px 0 va
 .chip:hover { transform: rotate(-2deg); }
 .chip[aria-pressed='true'] { background: var(--ink); color: var(--paper); }
 
-.project-list { border-top: 2px solid var(--ink); }
-.project { border-bottom: 2px solid var(--ink); }
-.project[hidden] { display: none; }
-.project summary {
-  list-style: none;
-  cursor: pointer;
-  display: grid;
-  grid-template-columns: clamp(3rem, 8vw, 6rem) minmax(0, 1fr) auto;
-  gap: 1rem clamp(1rem, 3vw, 2.5rem);
-  align-items: center;
-  padding: clamp(1.25rem, 3vw, 2rem) 0;
-  transition: padding .3s var(--ease), background .2s;
-}
-.project summary::-webkit-details-marker { display: none; }
-.project summary:hover { padding-left: 1rem; background: rgba(243, 221, 178, .3); }
-.project .no { font-family: var(--display); font-style: italic; font-size: clamp(1.6rem, 4vw, 3rem); line-height: 1; color: var(--rose); }
-.project .title { font-family: var(--display); font-size: clamp(1.6rem, 4.2vw, 3.3rem); line-height: 1.02; letter-spacing: -.025em; }
-.project .sum { margin-top: .5rem; color: var(--muted); font-size: 1rem; max-width: 58ch; }
-.project .side { display: flex; align-items: center; gap: 1.25rem; }
-.project .when { font-family: var(--hand); font-size: 1.7rem; white-space: nowrap; }
-.project .toggle { width: 42px; height: 42px; border: 2px solid var(--ink); border-radius: 50%; display: grid; place-items: center; font-size: 1.5rem; line-height: 1; transition: transform .3s var(--ease), background .2s; flex-shrink: 0; }
-.project[open]:not(.closing) .toggle { transform: rotate(135deg); background: var(--flamingo); }
-.project[open] summary { background: rgba(243, 188, 196, .35); }
-
-.project .detail { overflow: hidden; display: grid; grid-template-columns: clamp(3rem, 8vw, 6rem) minmax(0, 1fr); gap: 1rem clamp(1rem, 3vw, 2.5rem); padding: 0 0 clamp(2rem, 4vw, 3rem); background: rgba(243, 188, 196, .35); }
-.project .detail > div { grid-column: 2; }
-.project .detail p { margin-bottom: 1rem; font-size: 1.05rem; }
-.project .kind { display: inline-block; font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: .3rem .8rem; border: 2px solid var(--ink); border-radius: var(--wobble); margin-bottom: 1.25rem; background: var(--cat, var(--custard)); }
-.project[data-cat='product'] { --cat: var(--custard); }
-.project[data-cat='marketing'] { --cat: var(--blush); }
-.project[data-cat='design'] { --cat: var(--flamingo); }
-.project .detail .tags { margin-top: 1.5rem; }
-
 /* ── Experience ───────────────────────────────── */
 .exp { display: grid; gap: clamp(2rem, 4vw, 3rem); }
 .exp-item { display: grid; grid-template-columns: minmax(130px, 220px) minmax(0, 1fr); gap: 1rem clamp(1.5rem, 4vw, 4rem); padding-top: clamp(1.5rem, 3vw, 2.5rem); border-top: 2px solid var(--ink); }
@@ -463,11 +430,6 @@ body.menu-open { overflow: hidden; }
   .hamburger { display: flex; }
 
   .hero-art .badge { left: -4%; }
-  .project summary { grid-template-columns: 2.6rem minmax(0, 1fr) auto; gap: .75rem; }
-  .project .when { display: none; }
-  .project .toggle { width: 36px; height: 36px; }
-  .project .detail { grid-template-columns: 2.6rem minmax(0, 1fr); gap: .75rem; }
-  .project summary:hover { padding-left: .5rem; }
   .paper { padding: 1.5rem; box-shadow: 5px 5px 0 var(--ink); }
   .stamp { width: 132px; font-size: .8rem; }
   .footer-main { grid-template-columns: 1fr; }
@@ -588,14 +550,7 @@ body.menu-open { overflow: hidden; }
 .sticker.dragging, .stamp.dragging { cursor: grabbing; transition: none; transform: translate(var(--dx, 0px), var(--dy, 0px)) rotate(0deg) scale(1.1); box-shadow: 8px 8px 0 var(--ink); }
 a.paper { transition-duration: .2s, .35s, .3s; }
 
-/* project rows: content fades up in sequence when a row opens, filter re-pops the list */
-.project[open] .detail .kind { animation: fadeUp .6s var(--ease) both; }
-.project[open] .detail p { animation: fadeUp .6s var(--ease) both; }
-.project[open] .detail p:nth-of-type(1) { animation-delay: .08s; }
-.project[open] .detail p:nth-of-type(2) { animation-delay: .16s; }
-.project[open] .detail p:nth-of-type(3) { animation-delay: .24s; }
-.project[open] .detail .tags { animation: fadeUp .6s var(--ease) .3s both; }
-.project.pop { animation: rowIn .55s var(--ease) both; animation-delay: var(--d, 0ms); }
+.envelope.pop { animation: rowIn .55s var(--ease) both; animation-delay: var(--d, 0ms); }
 
 /* ── Page-to-page crossfade (browsers with cross-document view transitions) ── */
 @view-transition { navigation: auto; }
@@ -619,4 +574,142 @@ a.paper { transition-duration: .2s, .35s, .3s; }
 }
 @media (max-width: 640px) {
   .page-hero::after { bottom: auto; top: 5.4rem; right: 34vw; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   Projects: sealed envelopes + the letter inside
+   ═══════════════════════════════════════════════════════ */
+.mailbox {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr));
+  gap: clamp(2.25rem, 4vw, 3.5rem) clamp(1.5rem, 3vw, 2.5rem);
+  padding-top: 1rem;
+}
+
+.envelope {
+  --env: var(--blush);
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1.02;
+  padding: 0;
+  font: inherit;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  background: var(--env);
+  border: 2px solid var(--ink);
+  border-radius: 6px;
+  box-shadow: 6px 6px 0 var(--ink);
+  rotate: var(--r, 0deg);
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translate(var(--hx, 0px), var(--hy, 0px));
+  transition: transform .25s var(--ease), rotate .35s var(--ease), box-shadow .3s var(--ease);
+}
+.envelope[data-cat='product'] { --env: var(--custard); }
+.envelope[data-cat='marketing'] { --env: var(--blush); }
+.envelope[data-cat='design'] { --env: var(--flamingo); }
+.envelope[hidden] { display: none; }
+.envelope > * { pointer-events: none; }
+.envelope:hover, .envelope:focus-visible { rotate: 0deg; --hy: -6px; box-shadow: 10px 10px 0 var(--ink); --flap: 16deg; }
+.js .envelope.reveal { transition: opacity .7s var(--ease) calc(var(--n, 0) * 90ms), translate .7s var(--ease) calc(var(--n, 0) * 90ms), transform .25s var(--ease), rotate .35s var(--ease), box-shadow .3s var(--ease); }
+
+/* the front of the envelope covers the letter until it slides out */
+.env-front { position: absolute; inset: 0; z-index: 3; background: var(--env); border-radius: inherit; }
+
+/* fold lines on the paper */
+.env-folds { position: absolute; inset: 0; z-index: 3; width: 100%; height: 100%; }
+.env-folds path { fill: none; stroke: var(--ink); stroke-width: 1.5; vector-effect: non-scaling-stroke; opacity: .3; }
+
+/* the flap, hinged at the top edge */
+.env-flap { position: absolute; left: -2px; right: -2px; top: -2px; height: 44%; z-index: 4; transform-origin: 50% 0; transform: perspective(700px) rotateX(var(--flap, 0deg)); transition: transform .55s var(--ease); }
+.env-flap svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.env-flap polygon { fill: var(--env); fill: color-mix(in srgb, var(--env) 86%, #fff); stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+
+.env-date { position: absolute; left: 50%; top: 9px; z-index: 5; font-family: var(--hand); font-size: 1.45rem; line-height: 1; color: var(--ink); white-space: nowrap; transform: translateX(-62%) rotate(-3deg); }
+.env-stamp { position: absolute; right: 12px; top: 10px; z-index: 5; padding: .4rem .55rem; background: #fffaf2; border: 2px dashed var(--ink); box-shadow: 0 0 0 3px #fffaf2; font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; transform: rotate(5deg); }
+.env-seal {
+  position: absolute; left: 50%; top: 44%; z-index: 5;
+  width: 46px; height: 46px; margin: -23px 0 0 -23px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 28%, #a0524c, var(--ink) 72%);
+  border: 2px solid var(--ink);
+  color: #fcf4e6; font: italic 500 .95rem var(--display);
+  transform: rotate(var(--sr, -8deg));
+  transition: transform .45s var(--ease), opacity .3s;
+}
+
+/* the paper label with the title */
+.env-label { position: absolute; left: 6%; right: 6%; bottom: 6%; z-index: 4; padding: .65rem .85rem .75rem; background: #fffaf2; border: 2px solid var(--ink); border-radius: 3px; transform: rotate(-1deg); }
+.env-title { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-family: var(--display); font-size: clamp(1.1rem, 1.7vw, 1.35rem); line-height: 1.05; letter-spacing: -.02em; font-weight: 500; }
+.env-teaser { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-top: .35rem; font-size: .86rem; line-height: 1.35; color: var(--muted); }
+
+/* the letter hiding inside */
+.env-letter { position: absolute; left: 8%; right: 8%; top: 14%; height: 74%; z-index: 2; display: flex; flex-direction: column; gap: 12px; padding: 16% 12% 0; background: #fffaf2; border: 2px solid var(--ink); transition: transform .65s var(--ease) .12s; }
+.env-letter i { display: block; height: 2px; background: rgba(95, 38, 33, .3); border-radius: 2px; }
+.env-letter i:last-child { width: 55%; }
+
+/* opening: seal breaks, flap flips up, letter slides out */
+.envelope.opening { --flap: 180deg; z-index: 6; }
+.envelope.opening .env-flap { z-index: 1; }
+.envelope.opening .env-flap polygon { fill: color-mix(in srgb, var(--env) 75%, #fff); }
+.envelope.opening .env-seal { transform: scale(.25) rotate(90deg); opacity: 0; }
+.envelope.opening .env-letter { transform: translateY(-56%); }
+
+/* ── The letter (dialog) ── */
+body.letter-open { overflow: hidden; }
+.letter { width: min(780px, calc(100vw - 2rem)); max-height: min(90vh, 920px); margin: auto; padding: 0; border: 0; background: none; color: var(--ink); overflow: visible; }
+.letter::backdrop { background: rgba(95, 38, 33, .5); animation: fadeIn .35s ease both; }
+.letter[open] .sheet { animation: letterIn .75s var(--ease) both; }
+.letter.closing .sheet { animation: letterOut .3s ease both; }
+.letter.closing::backdrop { animation: fadeOut .3s ease both; }
+.letter.swap .sheet-body { animation: letterSwap .5s var(--ease) both; }
+@keyframes letterIn { from { opacity: 0; transform: translateY(70px) rotate(-2.5deg) scale(.94); } to { opacity: 1; transform: none; } }
+@keyframes letterOut { to { opacity: 0; transform: translateY(40px) rotate(1.5deg) scale(.96); } }
+@keyframes letterSwap { from { opacity: 0; transform: translateX(26px); } to { opacity: 1; transform: none; } }
+@keyframes fadeOut { to { opacity: 0; } }
+
+.sheet {
+  position: relative;
+  display: flex; flex-direction: column;
+  max-height: min(90vh, 920px);
+  background: #fffaf2;
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  box-shadow: 10px 10px 0 var(--ink);
+}
+.sheet::before { /* tape */
+  content: ''; position: absolute; top: -16px; left: 50%; z-index: 2;
+  width: 120px; height: 30px; transform: translateX(-50%) rotate(-2deg);
+  background: rgba(243, 221, 178, .9); border-inline: 2px dashed rgba(95, 38, 33, .2);
+}
+.sheet-body {
+  overflow-y: auto; overscroll-behavior: contain;
+  padding: clamp(2rem, 5vw, 3.25rem) clamp(1.5rem, 5vw, 3.5rem) 1.5rem clamp(2.75rem, 7vw, 5rem);
+  /* ruled notebook paper with a margin line */
+  background-image: linear-gradient(90deg, transparent clamp(2rem, 5.2vw, 3.6rem), rgba(224, 131, 143, .55) clamp(2rem, 5.2vw, 3.6rem), rgba(224, 131, 143, .55) calc(clamp(2rem, 5.2vw, 3.6rem) + 2px), transparent calc(clamp(2rem, 5.2vw, 3.6rem) + 2px)), repeating-linear-gradient(transparent 0 31px, rgba(95, 38, 33, .08) 31px 32px);
+  background-attachment: local;
+}
+.sheet-body .kind { display: inline-block; font-size: .76rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: .3rem .8rem; border: 2px solid var(--ink); border-radius: var(--wobble); margin-bottom: 1.1rem; background: var(--cat, var(--custard)); }
+.letter[data-cat='product'] { --cat: var(--custard); }
+.letter[data-cat='marketing'] { --cat: var(--blush); }
+.letter[data-cat='design'] { --cat: var(--flamingo); }
+.sheet-body .letter-title { font-size: clamp(2.2rem, 6vw, 4rem); line-height: .98; letter-spacing: -.03em; margin-bottom: 1.5rem; }
+.sheet-body p { margin-bottom: 1rem; font-size: 1.04rem; line-height: 2rem; max-width: 60ch; }
+.sheet-body .tags { margin: 1.25rem 0 .5rem; }
+.sheet-body .signature { font-family: var(--hand); font-size: 2.2rem; line-height: 1; color: var(--rose); margin: 1.25rem 0 0; transform: rotate(-3deg); width: fit-content; }
+
+.letter-close { position: absolute; top: -18px; right: -14px; z-index: 3; width: 46px; height: 46px; display: grid; place-items: center; background: var(--flamingo); border: 2px solid var(--ink); border-radius: 50%; color: var(--ink); font: 400 1.9rem/1 var(--body); cursor: pointer; box-shadow: 3px 3px 0 var(--ink); transition: transform .25s var(--ease); }
+.letter-close:hover { transform: rotate(90deg) scale(1.08); }
+
+.sheet-nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .85rem clamp(1rem, 4vw, 2rem); border-top: 2px solid var(--ink); background: var(--paper-2); border-radius: 0 0 2px 2px; }
+.sheet-nav button { font: 600 .95rem var(--body); color: var(--ink); background: none; border: 0; padding: .4rem .2rem; cursor: pointer; border-bottom: 2px solid transparent; }
+.sheet-nav button:hover { border-color: var(--rose); color: var(--rose); }
+.sheet-count { font-family: var(--hand); font-size: 1.6rem; line-height: 1; }
+
+@media (max-width: 640px) {
+  .letter { width: calc(100vw - 1.25rem); }
+  .letter-close { right: -6px; top: -14px; }
+  .sheet-body p { line-height: 1.75rem; font-size: 1rem; }
+  .sheet-body { background-image: none; padding-left: 1.5rem; }
 }

@@ -7,17 +7,18 @@ import Float from '../components/Float.astro';
 import { projects, categories } from '../data/projects';
 
 const pad = (n: number) => String(n).padStart(2, '0');
+const tilt = [-1.6, 1.1, -0.6, 1.8, -1.1, 0.7];
 ---
 
 <BaseLayout
   title="Projects — Hélène David"
   description="Projects by Hélène David: CalmCampus (KU Leuven KICK Challenge finalist), an AI hackathon app, brand identities, typographic work and marketing campaigns."
 >
-  <PageHero label="projects" lead="Product, marketing and design work from the last two years. Open any row for the full story.">
+  <PageHero label="projects" lead="Eleven little letters, one per project. Pick an envelope to open it.">
     Things I’ve <em>made</em>
   </PageHero>
 
-  <Marquee items={['Product', 'Marketing', 'Design', 'Open any row', 'Typography', 'Campaigns', 'Startups']} tone="custard" reverse />
+  <Marquee items={['Product', 'Marketing', 'Design', 'Open a letter', 'Typography', 'Campaigns', 'Startups']} tone="custard" reverse />
 
   <section class="has-float">
     <Float kind="flower" color="blush" size={150} speed={0.12} spin style="right:-50px;top:14%" />
@@ -29,35 +30,62 @@ const pad = (n: number) => String(n).padStart(2, '0');
         {Object.entries(categories).map(([key, label]) => (
           <button class="chip" data-filter={key} aria-pressed="false">{label}</button>
         ))}
-        <span class="hand" style="margin-left:auto"><span id="project-count">{projects.length}</span> projects</span>
+        <span class="hand" style="margin-left:auto"><span id="project-count">{projects.length}</span> letters</span>
       </div>
 
-      <div class="project-list">
+      <div class="mailbox">
         {projects.map((p, i) => (
-          <details class="project reveal" id={p.id} data-cat={p.cat}>
-            <summary>
-              <span class="no">{pad(i + 1)}</span>
-              <div>
-                <h3 class="title">{p.title}</h3>
-                <p class="sum">{p.summary}</p>
-              </div>
-              <span class="side">
-                <span class="when">{p.date}</span>
-                <span class="toggle" aria-hidden="true">+</span>
-              </span>
-            </summary>
-            <div class="detail">
-              <div>
-                <span class="kind">{p.kind} · {p.date}</span>
-                {p.body.map((para) => <p>{para}</p>)}
-                <div class="tags">{p.tags.map((t) => <span>{t}</span>)}</div>
-              </div>
-            </div>
-          </details>
+          <button
+            type="button"
+            class="envelope reveal"
+            data-id={p.id}
+            data-cat={p.cat}
+            aria-haspopup="dialog"
+            style={`--r:${tilt[i % tilt.length]}deg; --n:${i % 3}; --sr:${i % 2 ? 9 : -8}deg`}
+          >
+            <span class="env-letter" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+            <span class="env-front" aria-hidden="true"></span>
+            <svg class="env-folds" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M0 100 L50 52 L100 100" />
+              <path d="M0 0 L50 56" /><path d="M100 0 L50 56" />
+            </svg>
+            <span class="env-flap" aria-hidden="true">
+              <svg viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="0,0 100,0 50,100" /></svg>
+            </span>
+            <span class="env-date" aria-hidden="true">{p.date}</span>
+            <span class="env-stamp" aria-hidden="true">{categories[p.cat]}</span>
+            <span class="env-seal" aria-hidden="true">{pad(i + 1)}</span>
+            <span class="env-label">
+              <span class="env-title">{p.title}</span>
+              <span class="env-teaser">{p.teaser}</span>
+            </span>
+          </button>
         ))}
       </div>
     </div>
   </section>
+
+  {projects.map((p) => (
+    <template id={`tpl-${p.id}`}>
+      <span class="kind">{p.kind} · {p.date}</span>
+      <h3 class="letter-title" id="letter-title">{p.title}</h3>
+      {p.body.map((para) => <p>{para}</p>)}
+      <div class="tags">{p.tags.map((t) => <span>{t}</span>)}</div>
+      <p class="signature">with love, Hélène ✺</p>
+    </template>
+  ))}
+
+  <dialog id="letter" class="letter" aria-labelledby="letter-title">
+    <div class="sheet">
+      <button type="button" class="letter-close" data-close aria-label="Close letter">×</button>
+      <div class="sheet-body"></div>
+      <nav class="sheet-nav" aria-label="Letters">
+        <button type="button" data-prev>← previous</button>
+        <span class="sheet-count" aria-live="polite"></span>
+        <button type="button" data-next>next →</button>
+      </nav>
+    </div>
+  </dialog>
 
   <CtaStrip
     text="Happy to share more about the thinking behind any of these."

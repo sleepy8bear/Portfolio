@@ -191,10 +191,10 @@ if (fine && !reduce) {
     if (e.pointerType !== 'mouse') return;
     x = e.clientX; y = e.clientY;
     ring.classList.add('on');
-    const hot = e.target.closest?.('summary, a, button, .sticker, .stamp, .chip');
+    const hot = e.target.closest?.('a, button, .sticker, .stamp, .chip');
     let text = '';
     if (hot) {
-      if (hot.matches('summary')) text = hot.parentElement.open ? 'close' : 'open';
+      if (hot.matches('.envelope')) text = 'open';
       else if (hot.matches('a.paper')) text = 'view';
       else if (hot.matches('.sticker, .stamp')) text = 'drag';
     }
@@ -230,7 +230,7 @@ if (fine && !reduce) {
   }
 
   // paper cards tilt towards the pointer
-  document.querySelectorAll('a.paper').forEach((card) => {
+  document.querySelectorAll('a.paper, .envelope').forEach((card) => {
     card.addEventListener('pointermove', (e) => {
       const r = card.getBoundingClientRect();
       const px = (e.clientX - r.left) / r.width - 0.5;
@@ -271,56 +271,109 @@ if (fine && !reduce) {
   });
 }
 
-/* ── Projects: smooth open/close, filter, deep links ── */
-const rows = document.querySelectorAll('.project');
-rows.forEach((row) => {
-  const summary = row.querySelector('summary');
-  const detail = row.querySelector('.detail');
-  summary.addEventListener('click', (e) => {
-    if (reduce || !detail.animate) return;
-    e.preventDefault();
-    const ease = 'cubic-bezier(.2,.7,.2,1)';
-    if (row.open) {
-      row.classList.add('closing');
-      const h = detail.offsetHeight;
-      detail.animate([{ height: `${h}px`, opacity: 1 }, { height: '0px', opacity: 0 }], { duration: 350, easing: ease })
-        .onfinish = () => { row.open = false; row.classList.remove('closing'); };
-    } else {
-      row.open = true;
-      const h = detail.offsetHeight;
-      detail.animate([{ height: '0px', opacity: 0 }, { height: `${h}px`, opacity: 1 }], { duration: 480, easing: ease });
-    }
-  });
-});
+/* ── Projects: sealed envelopes that open into a letter ── */
+const envelopes = [...document.querySelectorAll('.envelope')];
+const letter = document.getElementById('letter');
+const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
+if (envelopes.length && letter) {
+  const body = letter.querySelector('.sheet-body');
+  const counter = letter.querySelector('.sheet-count');
+  let current = null;
+  let busy = false;
+  const visible = () => envelopes.filter((e) => !e.hidden);
+
+  function fill(env) {
+    const tpl = document.getElementById(`tpl-${env.dataset.id}`);
+    body.replaceChildren(tpl.content.cloneNode(true));
+    body.scrollTop = 0;
+    letter.dataset.cat = env.dataset.cat;
+    const list = visible();
+    counter.textContent = `${list.indexOf(env) + 1} / ${list.length}`;
+  }
+
+  async function openLetter(env, { animate = true } = {}) {
+    if (busy || letter.open) return;
+    busy = true;
+    current = env;
+    env.classList.add('opening');             // seal breaks, flap flips, letter slides out
+    if (animate && !reduce) await wait(560);
+    fill(env);
+    letter.showModal();
+    document.body.classList.add('letter-open');
+    history.replaceState(null, '', `#${env.dataset.id}`);
+    busy = false;
+  }
+
+  async function closeLetter() {
+    if (!letter.open || letter.classList.contains('closing')) return;
+    if (!reduce) {
+      letter.classList.add('closing');
+      await wait(300);
+    }
+    letter.close();
+  }
+
+  letter.addEventListener('close', () => {
+    letter.classList.remove('closing', 'swap');
+    document.body.classList.remove('letter-open');
+    envelopes.forEach((e) => e.classList.remove('opening'));
+    history.replaceState(null, '', location.pathname + location.search);
+    current?.focus({ preventScroll: true });
+  });
+  letter.addEventListener('cancel', (e) => { e.preventDefault(); closeLetter(); }); // Esc: animate out first
+  letter.addEventListener('click', (e) => { if (e.target === letter) closeLetter(); }); // click outside the sheet
+
+  function step(dir) {
+    const list = visible();
+    if (list.length < 2) return;
+    const next = list[(list.indexOf(current) + dir + list.length) % list.length];
+    current.classList.remove('opening');
+    next.classList.add('opening');
+    current = next;
+    fill(next);
+    history.replaceState(null, '', `#${next.dataset.id}`);
+    letter.classList.remove('swap');
+    void letter.offsetWidth;
+    letter.classList.add('swap');
+  }
+  letter.querySelector('[data-close]').addEventListener('click', closeLetter);
+  letter.querySelector('[data-prev]').addEventListener('click', () => step(-1));
+  letter.querySelector('[data-next]').addEventListener('click', () => step(1));
+  document.addEventListener('keydown', (e) => {
+    if (!letter.open) return;
+    if (e.key === 'ArrowLeft') step(-1);
+    if (e.key === 'ArrowRight') step(1);
+  });
+
+  envelopes.forEach((env) => env.addEventListener('click', () => openLetter(env)));
+
+  // Deep links like /projects.html#calmcampus open that letter
+  if (location.hash) {
+    const target = envelopes.find((e) => e.dataset.id === decodeURIComponent(location.hash.slice(1)));
+    if (target) setTimeout(() => openLetter(target, { animate: false }), 250);
+  }
+}
+
+/* ── Project filter ── */
 const chips = document.querySelectorAll('[data-filter]');
 const count = document.getElementById('project-count');
 chips.forEach((chip) => chip.addEventListener('click', () => {
   const f = chip.dataset.filter;
   chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
   let n = 0;
-  rows.forEach((row) => {
-    const show = f === 'all' || row.dataset.cat === f;
-    row.hidden = !show;
-    row.classList.remove('pop');
+  envelopes.forEach((env) => {
+    const show = f === 'all' || env.dataset.cat === f;
+    env.hidden = !show;
+    env.classList.remove('pop');
     if (show) {
-      row.style.setProperty('--d', `${n * 55}ms`);
-      void row.offsetWidth; // restart the animation
-      row.classList.add('pop');
+      env.style.setProperty('--d', `${n * 55}ms`);
+      void env.offsetWidth; // restart the animation
+      env.classList.add('pop');
       n++;
     }
   });
   if (count) count.textContent = String(n);
 }));
-
-// Deep links like /projects.html#calmcampus open that project
-if (location.hash) {
-  const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
-  if (target && target.tagName === 'DETAILS') {
-    target.open = true;
-    target.classList.add('in');
-    setTimeout(() => target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }), 150);
-  }
-}
 
 onScroll();

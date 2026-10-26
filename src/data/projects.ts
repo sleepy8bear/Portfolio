@@ -6,6 +6,7 @@ export interface Project {
   date: string;
   cat: Category;
   kind: string;
+  teaser: string;
   summary: string;
   body: string[];
   tags: string[];
@@ -26,6 +27,7 @@ export const projects: Project[] = [
     date: 'Apr 2026 — now',
     cat: 'product',
     kind: 'Startup · KICK Challenge finalist',
+    teaser: 'A privacy-first app that spots student burnout early.',
     summary: 'A privacy-first mobile app that spots early signs of student stress and burnout, before they escalate.',
     body: [
       'Developed for the KU Leuven KICK Challenge 2026, where it reached the finals with a preventive approach to student wellbeing. The app builds a personal baseline from signals already on a student’s phone (typing patterns, app usage, screen-on time and sleep rhythms) and on-device AI flags meaningful changes that may point to elevated stress. Raw data never leaves the device, so it is designed to be GDPR-native and privacy-preserving.',
@@ -41,6 +43,7 @@ export const projects: Project[] = [
     date: 'Apr — Jun 2026',
     cat: 'marketing',
     kind: 'Strategic marketing course',
+    teaser: 'Three strategies for a solar-roasted coffee brand.',
     summary: 'Three alternative strategies for a solar-roasted Belgian coffee brand. One was chosen and built into a marketing mix.',
     body: [
       'A follow-up to our analysis of Ray & Jules, a Belgian coffee brand that roasts premium coffee with solar energy. Starting from an updated SWOT, we developed three strategies, each built around its own buyer persona, positioning statement and core idea: becoming the reference standard for home-espresso enthusiasts; making sustainability visible, provable and comparable for eco-conscious drinkers; and removing every barrier to switching for supermarket coffee buyers ready to upgrade.',
@@ -54,6 +57,7 @@ export const projects: Project[] = [
     date: 'Feb — Jun 2026',
     cat: 'marketing',
     kind: 'Digital marketing campaign',
+    teaser: 'A fairytale campaign for international students.',
     summary: 'A fairytale-style campaign to attract international students to a Business Management programme.',
     body: [
       'A semester-long group project for the BME programme at UC Leuven-Limburg. We audited the programme’s website and socials, chose the theme “Study in Europe for International Students” and built a persona: Manon, an 18-year-old French high-school student who wants “a real, fun international experience, not just a semester abroad.” Keyword research (Semrush, Ahrefs, AnswerThePublic, Google Trends, Reddit social listening) fed a topic cluster and an SEO-optimised website: one pillar page linking to four cluster pages. I wrote the pillar page and checked the site’s SEO.',
@@ -67,6 +71,7 @@ export const projects: Project[] = [
     date: 'Mar — May 2026',
     cat: 'marketing',
     kind: 'Strategic marketing course',
+    teaser: 'A full strategic analysis of a coffee brand.',
     summary: 'A full strategic analysis of a sustainable coffee brand, ending in a SWOT and growth recommendations.',
     body: [
       'We met every Friday and did every part of the analysis together, so each of us could present and defend the whole plan in the oral Q&A. Internally we mapped positioning with the Abell model, reviewed the marketing mix and assessed brand equity with Keller’s CBBE pyramid. We built two personas, a sustainability-driven current buyer and a convenience-and-price-driven potential buyer, and compared them with value curves and a perceptual map.',
@@ -80,6 +85,7 @@ export const projects: Project[] = [
     date: 'Mar 2026',
     cat: 'product',
     kind: '24-hour hackathon',
+    teaser: 'An AI investment app, built in 24 hours.',
     summary: 'An AI investment app that adapts its interface and advice to each individual user.',
     body: [
       'A 24-hour hackathon organised by NEXT Leuven, working on a real-world case by InvestSuite. We built an AI-powered investment app using the Claude API that dynamically adapts its interface and recommendations to the individual user.',
@@ -94,6 +100,7 @@ export const projects: Project[] = [
     date: 'Nov 2025 — Jan 2026',
     cat: 'design',
     kind: 'Brand identity & graphic design',
+    teaser: 'A mood-driven restaurant brand, start to finish.',
     summary: 'A mood-driven restaurant concept, taken from first idea to print and digital ads.',
     body: [
       'A project for the Brand Identity and Graphic Design course. Food & Mood is a restaurant concept designed to create a more personalised dining experience. My teammate and I took the brand from concept to execution: brand story, visual identity, logo, colour palette, typography, illustrations, UI concept, mockups, and print and digital advertising assets.',
@@ -108,6 +115,7 @@ export const projects: Project[] = [
     date: 'Nov 2025',
     cat: 'design',
     kind: 'Photoshop · brand archetypes',
+    teaser: 'The Jester meets the Ruler.',
     summary: 'The Jester meets the Ruler: a playful ice-cream brand reimagined as premium and authoritative.',
     body: [
       'I was given Ben & Jerry’s and a contrasting archetype, The Ruler, and had to reimagine the brand as its alter ego. Today the brand is playful, irreverent and full of humour, closest to the Jester. The Ruler stands for control, status, quality and authority.',
@@ -122,6 +130,7 @@ export const projects: Project[] = [
     date: 'Oct 2025',
     cat: 'design',
     kind: 'Photoshop · typographic carousel',
+    teaser: 'A fairytale told in type and colour only.',
     summary: 'The whole fairytale told in five Instagram slides using only typography and colour.',
     body: [
       'A five-slide Instagram carousel (1080 × 1350 px) built from type and colour alone, with no images, icons or illustrations. “Mirror mirror” forms an oval frame around the Queen’s question; the letters of “RUN” scatter diagonally across dark forest green; “Home Sweet Home” repeats in a doubled, offset script; the poisoned apple is shaped entirely from the word “apple” in sharp blackletter; and the story ends in a heart drawn from the word “kiss.”',
@@ -136,6 +145,7 @@ export const projects: Project[] = [
     date: 'Sep 2025',
     cat: 'design',
     kind: 'Photoshop · poster series',
+    teaser: 'Three posters about diversity in sport.',
     summary: 'Three posters for a Nike campaign about diversity in sport: swimming, football and tennis.',
     body: [
       'We began by researching Nike’s existing advertising and building a mood board. Each poster focuses on a different sport: an athlete is cut out and placed on a matching background, both turned black and white, with a single accent colour (turquoise, neon yellow, or the yellow of a tennis ball). Every poster carries “Just do it.”, “New collection out now” and nike.com, all set in Futura PT.',
@@ -149,6 +159,7 @@ export const projects: Project[] = [
     date: 'May 2025',
     cat: 'marketing',
     kind: 'Boosterweek · team project',
+    teaser: 'A campaign for a real estate platform.',
     summary: 'A one-week communication strategy for a Belgian real estate platform, built by a fictional agency.',
     body: [
       'Five of us set up a fictional agency, House of Vision, and built a full communication strategy for Immoscoop, positioning it as a “caretaker” in the home search so it replaces the Immoweb reflex as people’s first step.',
@@ -162,6 +173,7 @@ export const projects: Project[] = [
     date: 'Dec 2024',
     cat: 'marketing',
     kind: 'Boosterweek · marketing environment',
+    teaser: 'The marketing world of a logistics firm.',
     summary: 'A marketing environment analysis of a European sustainable-logistics supplier, ending in two ideas.',
     body: [
       'In a cross-class team of four, we analysed the marketing environment of Engels Logistics, a European supplier of sustainable logistics and waste-management solutions, starting with an interview with the company. The analysis covered the micro-environment (financials, internal culture, strategy and marketing), the meso-environment (customers, suppliers, intermediaries and competitors, using Porter’s Five Forces and a 4P comparison with Sulo and Transoplast) and the macro-environment (EU legislation, sustainability, e-commerce and tech advancements).',
