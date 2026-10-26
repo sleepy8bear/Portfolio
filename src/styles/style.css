@@ -956,7 +956,7 @@ body.letter-open { overflow: hidden; }
 }
 
 /* ── Envelope polish: postmark, airmail edge, wax seal ── */
-.env-postmark { position: absolute; right: 2px; top: -4px; z-index: 6; width: 124px; height: auto; color: var(--rose); opacity: .78; rotate: -9deg; pointer-events: none; }
+.env-postmark { position: absolute; right: 18px; top: 8px; z-index: 6; width: 116px; height: auto; color: var(--rose); opacity: .78; rotate: -9deg; pointer-events: none; }
 .env-air { position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; height: 11px; border-top: 2px solid var(--ink); border-radius: 0 0 4px 4px; background: repeating-linear-gradient(135deg, var(--flamingo) 0 9px, #fffaf2 9px 15px, var(--ink) 15px 24px, #fffaf2 24px 30px); }
 .env-seal { border-radius: 50% 47% 52% 48% / 48% 52% 47% 50%; box-shadow: 0 3px 0 rgba(95, 38, 33, .35), inset 0 2px 0 rgba(255, 250, 242, .22); }
 .env-seal::before { content: ''; position: absolute; inset: 5px; border: 1.5px dashed rgba(252, 244, 230, .55); border-radius: 50%; }
